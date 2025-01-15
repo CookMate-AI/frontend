@@ -15,6 +15,7 @@ export default {
   theme: {
     extend: {
       fontSize: px0_100,
+      spacing: px0_400,
       borderWidth: px0_100,
       minWidth: px0_400,
       minHeight: px0_400,
