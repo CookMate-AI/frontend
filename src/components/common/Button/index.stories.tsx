@@ -7,7 +7,17 @@ const meta: Meta<typeof Button> = {
   tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: { type: 'select', options: ['primary', 'secondary', 'disabled'] },
+      control: {
+        type: 'select',
+        options: [
+          'primary',
+          'secondary',
+          'disabled',
+          'outlinePrimary',
+          'outlineSecondary',
+          'outlineDisabled',
+        ],
+      },
     },
   },
 };
@@ -34,5 +44,26 @@ export const Disabled: Story = {
   args: {
     label: 'Disabled Button',
     variant: 'disabled',
+  },
+};
+
+export const OutlinePrimary: Story = {
+  args: {
+    label: 'Outline Primary Button',
+    variant: 'outlinePrimary',
+  },
+};
+
+export const OutlineSecondary: Story = {
+  args: {
+    label: 'Outline Secondary Button',
+    variant: 'outlineSecondary',
+  },
+};
+
+export const OutlineDisabled: Story = {
+  args: {
+    label: 'Outline Disabled Button',
+    variant: 'outlineDisabled',
   },
 };
