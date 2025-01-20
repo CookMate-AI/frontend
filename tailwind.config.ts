@@ -61,7 +61,7 @@ export default {
         navy: '#04394A',
       },
       fontFamily: {
-        sans: ['WAGURITTF', 'sans-serif'],
+        sans: ['NPSfont', 'MoveSans', 'sans-serif'],
       },
       borderRadius: px0_100,
     },
