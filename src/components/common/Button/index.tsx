@@ -8,10 +8,11 @@ interface ButtonProps {
     | 'outlinePrimary'
     | 'outlineSecondary'
     | 'outlineDisabled';
+  className?: string;
 }
 
-export default function Button({ label, onClick, variant = 'primary' }: ButtonProps) {
-  const baseStyles = 'p-16 text-white rounded-20';
+export default function Button({ label, onClick, variant = 'primary', className }: ButtonProps) {
+  const baseStyles = 'p-16 text-white rounded-20 flex items-center justify-center';
   const variantStyles = {
     primary: 'bg-orange-400 hover:bg-orange-300',
     secondary: 'bg-mint-500 hover:bg-mint-400',
@@ -23,10 +24,10 @@ export default function Button({ label, onClick, variant = 'primary' }: ButtonPr
     outlineDisabled: 'bg-white border border-gray-300 !text-gray-300 cursor-not-allowed',
   };
 
-  const styles = variantStyles[variant] || variantStyles.primary;
+  const styles = `${baseStyles} ${variantStyles[variant] || variantStyles.primary} ${className || ''}`;
 
   return (
-    <button onClick={onClick} className={`${baseStyles} ${styles}`}>
+    <button onClick={onClick} className={styles}>
       {label}
     </button>
   );
