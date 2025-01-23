@@ -59,6 +59,7 @@ export default {
           900: '#239BAE',
         },
         navy: '#04394A',
+        yellow: '#FFD700',
       },
       fontFamily: {
         sans: ['NPSfont', 'MoveSans', 'sans-serif'],
