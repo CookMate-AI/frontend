@@ -64,6 +64,11 @@ export default {
         sans: ['NPSfont', 'MoveSans', 'sans-serif'],
       },
       borderRadius: px0_100,
+      boxShadow: {
+        sm: '0px 8px 13px 0px rgba(25, 31, 40, 0.04)',
+        md: '3px 6px 28px 0px rgba(25, 31, 40, 0.08)',
+        lg: '0px 16px 34px 0px rgba(25, 31, 40, 0.16)',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
