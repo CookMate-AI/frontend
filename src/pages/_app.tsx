@@ -1,3 +1,4 @@
+import Footer from '@/components/common/Footer';
 import Gnb from '@/components/common/Gnb';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
@@ -7,6 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <div>
       <Gnb />
       <Component {...pageProps} />
+      <Footer />
     </div>
   );
 }
