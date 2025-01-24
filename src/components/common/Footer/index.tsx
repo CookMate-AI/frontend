@@ -13,7 +13,7 @@ const companyInfo = [
 
 export default function Footer() {
   return (
-    <div className="relative flex h-160 w-full flex-col items-center gap-17 px-40 text-12 text-gray-500">
+    <div className="relative flex h-160 w-full flex-col items-center gap-17 bg-white px-40 text-12 text-gray-500">
       <div className="flex w-full items-center justify-between">
         <Image src={'/icons/ic-title2.svg'} alt="title2" width={180} height={60} />
         <div className="flex w-full justify-end gap-20 font-bold">
