@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import { Controller, useForm } from 'react-hook-form';
-import { FormValues } from '@/types/login';
+import { FormValues } from '@/types/signup';
 
 export default function Signup() {
   const {
@@ -18,7 +18,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex min-h-screen justify-center bg-beige-200 pt-100">
+    <div className="flex min-h-screen justify-center bg-beige-200 pt-100 pb-20">
       <div className="relative h-940 w-650 rounded-24 bg-white px-30 py-60 shadow-md">
         <h1 className="text-center text-30 font-bold text-gray-800">회원가입</h1>
         <form onSubmit={handleSubmit(onsubmit)} className="mt-70 flex flex-col gap-30">
@@ -27,7 +27,7 @@ export default function Signup() {
               name="id"
               control={control}
               rules={{
-                required: '아이디를 입력해주세요.',
+                required: '아이디를 입력해 주세요.',
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,12}$/,
                   message:
@@ -39,7 +39,7 @@ export default function Signup() {
                   {...field}
                   type="text"
                   label="아이디"
-                  placeholder="아이디를 입력해주세요."
+                  placeholder="아이디를 입력해 주세요."
                   error={!!errors.id}
                 />
               )}
@@ -55,10 +55,10 @@ export default function Signup() {
                 name="email"
                 control={control}
                 rules={{
-                  required: '이메일을 입력해주세요.',
+                  required: '이메일을 입력해 주세요.',
                   pattern: {
                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: '유효한 이메일 형식을 입력해주세요.',
+                    message: '유효한 이메일 형식을 입력해 주세요.',
                   },
                 }}
                 render={({ field }) => (
@@ -66,7 +66,7 @@ export default function Signup() {
                     {...field}
                     type="text"
                     label="이메일"
-                    placeholder="이메일을 입력해주세요."
+                    placeholder="이메일을 입력해 주세요."
                     error={!!errors.email}
                   />
                 )}
@@ -87,13 +87,13 @@ export default function Signup() {
               <Controller
                 name="emailConfirm"
                 control={control}
-                rules={{ required: '인증번호를 입력해주세요.' }}
+                rules={{ required: '인증번호를 입력해 주세요.' }}
                 render={({ field }) => (
                   <Input
                     {...field}
                     type="text"
                     label="인증번호"
-                    placeholder="인증번호를 입력해주세요."
+                    placeholder="인증번호를 입력해 주세요."
                     error={!!errors.emailConfirm}
                   />
                 )}
@@ -116,7 +116,7 @@ export default function Signup() {
               name="password"
               control={control}
               rules={{
-                required: '비밀번호를 입력해주세요.',
+                required: '비밀번호를 입력해 주세요.',
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
                   message: '비밀번호가 영문, 숫자 포함 8자 이상이 되도록 해 주세요.',
@@ -127,7 +127,7 @@ export default function Signup() {
                   {...field}
                   type="password"
                   label="비밀번호"
-                  placeholder="비밀번호를 입력해주세요."
+                  placeholder="비밀번호를 입력해 주세요."
                   error={!!errors.password}
                 />
               )}
@@ -142,7 +142,7 @@ export default function Signup() {
               name="passwordConfirm"
               control={control}
               rules={{
-                required: '비밀번호를 확인해주세요.',
+                required: '비밀번호를 확인해 주세요.',
                 validate: (value) => value === watch('password') || '비밀번호가 일치하지 않습니다.',
               }}
               render={({ field }) => (
@@ -150,7 +150,7 @@ export default function Signup() {
                   {...field}
                   type="password"
                   label="비밀번호 확인"
-                  placeholder="비밀번호를 한 번 더 입력해주세요."
+                  placeholder="비밀번호를 한 번 더 입력해 주세요."
                   error={!!errors.passwordConfirm}
                 />
               )}
@@ -180,7 +180,7 @@ export default function Signup() {
           <Button
             label="가입하기"
             type="submit"
-            className="absolute bottom-50 left-1/2 mt-20 h-60 w-180 -translate-x-1/2 transform text-20"
+            className="absolute bottom-50 left-1/2 mt-20 h-50 w-180 -translate-x-1/2 transform text-20"
           />
         </form>
       </div>

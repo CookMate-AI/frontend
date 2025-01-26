@@ -71,6 +71,21 @@ export default {
         md: '3px 6px 28px 0px rgba(25, 31, 40, 0.08)',
         lg: '0px 16px 34px 0px rgba(25, 31, 40, 0.16)',
       },
+      animation: {
+        bounce: 'bounce 1s infinite',
+      },
+      keyframes: {
+        bounce: {
+          '0%, 100%': {
+            transform: 'translateY(-25%)',
+            animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
+          },
+          '50%': {
+            transform: 'translateY(0)',
+            animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+          },
+        },
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

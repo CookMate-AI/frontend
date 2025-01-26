@@ -1,10 +1,17 @@
 import Button from '@/components/common/Button';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
-export default function index() {
+export default function Index() {
+  const router = useRouter();
+
+  const handleMove = () => {
+    router.push('/login');
+  };
+
   return (
-    <div className="relative min-h-screen bg-beige-200 flex flex-col items-center justify-center">
-      <div className="flex w-full h-310 flex-col items-center justify-center bg-beige-300">
+    <div className="relative flex min-h-screen flex-col items-center justify-center bg-beige-200">
+      <div className="flex h-310 w-full flex-col items-center justify-center bg-beige-300">
         <div className="flex items-center justify-center gap-10 text-30 font-extrabold">
           <span className="text-yellow">잔반 걱정 없는</span>
           <span>AI</span>
@@ -60,7 +67,11 @@ export default function index() {
           </div>
         </div>
       </div>
-      <Button label="이용하기" className="fixed bottom-20 h-64 w-180 text-24" />
+      <Button
+        label="이용하기"
+        className="fixed bottom-20 h-64 w-180 animate-bounce text-24"
+        onClick={handleMove}
+      />
     </div>
   );
 }

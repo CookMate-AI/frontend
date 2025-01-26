@@ -22,16 +22,19 @@ export default function Input({
   value,
 }: InputProps) {
   const baseStyles = classNames(
-    'h-55 w-full rounded-12 border border-gray-200 bg-gray-100 px-16 text-gray-500 outline-none focus:border-gray-300',
+    'h-55 w-full rounded-12 border px-16 text-gray-500 outline-none focus:border-gray-300',
     {
+      'border-gray-200 bg-gray-100': !error,
       'bg-error border-error focus:border-red-200': error,
       'bg-gray-200 cursor-not-allowed': disabled,
     },
     className,
   );
 
+  console.log(baseStyles);
+
   return (
-    <>
+    <div className="w-full">
       <label className="mb-4 ml-4 block text-sm text-gray-700">{label}</label>
       <input
         type={type}
@@ -41,6 +44,6 @@ export default function Input({
         onChange={onChange}
         value={value}
       />
-    </>
+    </div>
   );
 }
