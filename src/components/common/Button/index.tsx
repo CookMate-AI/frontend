@@ -1,5 +1,6 @@
 interface ButtonProps {
   label: string;
+  type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
   variant?:
     | 'primary'
@@ -11,7 +12,13 @@ interface ButtonProps {
   className?: string;
 }
 
-export default function Button({ label, onClick, variant = 'primary', className }: ButtonProps) {
+export default function Button({
+  label,
+  type = 'button',
+  onClick,
+  variant = 'primary',
+  className,
+}: ButtonProps) {
   const baseStyles = 'p-16 text-white rounded-20 flex items-center justify-center';
   const variantStyles = {
     primary: 'bg-orange-400 hover:bg-orange-300',
@@ -27,7 +34,7 @@ export default function Button({ label, onClick, variant = 'primary', className 
   const styles = `${baseStyles} ${variantStyles[variant] || variantStyles.primary} ${className || ''}`;
 
   return (
-    <button onClick={onClick} className={styles}>
+    <button onClick={onClick} className={styles} type={type}>
       {label}
     </button>
   );
