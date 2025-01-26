@@ -60,6 +60,7 @@ export default {
         },
         navy: '#04394A',
         yellow: '#FFD700',
+        error: '#FFF1F2',
       },
       fontFamily: {
         sans: ['NPSfont', 'MoveSans', 'sans-serif'],
