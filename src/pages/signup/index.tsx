@@ -18,35 +18,42 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex min-h-screen justify-center bg-beige-200 pt-100 pb-20">
+    <div className="flex min-h-screen justify-center bg-beige-200 pb-20 pt-100">
       <div className="relative h-940 w-650 rounded-24 bg-white px-30 py-60 shadow-md">
         <h1 className="text-center text-30 font-bold text-gray-800">회원가입</h1>
         <form onSubmit={handleSubmit(onsubmit)} className="mt-70 flex flex-col gap-30">
-          <div className="relative">
-            <Controller
-              name="id"
-              control={control}
-              rules={{
-                required: '아이디를 입력해 주세요.',
-                pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,12}$/,
-                  message:
-                    '아이디는 영어와 숫자가 혼합되어야 하며, 6~12글자여야 합니다. (특수문자 사용 불가)',
-                },
-              }}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  type="text"
-                  label="아이디"
-                  placeholder="아이디를 입력해 주세요."
-                  error={!!errors.id}
-                />
+          <div className="relative flex items-end gap-20">
+            <div className="w-full">
+              <Controller
+                name="id"
+                control={control}
+                rules={{
+                  required: '아이디를 입력해 주세요.',
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,12}$/,
+                    message:
+                      '아이디는 영어와 숫자가 혼합되어야 하며, 6~12글자여야 합니다. (특수문자 사용 불가)',
+                  },
+                }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type="text"
+                    label="아이디"
+                    placeholder="아이디를 입력해 주세요."
+                    error={!!errors.id}
+                  />
+                )}
+              />
+              {errors.id && (
+                <p className="absolute left-3 text-13 text-red-400">{errors.id.message}</p>
               )}
+            </div>
+            <Button
+              label="중복확인"
+              variant="outlinePrimary"
+              className="h-45 w-140 text-14 font-bold"
             />
-            {errors.id && (
-              <p className="absolute left-3 text-13 text-red-400">{errors.id.message}</p>
-            )}
           </div>
 
           <div className="relative flex items-end gap-20">
