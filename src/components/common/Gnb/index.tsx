@@ -7,6 +7,10 @@ export default function Gnb() {
   const router = useRouter();
   const { openDropdown } = useDropdownStore();
 
+  const hideProfilePages = ['/login', '/signup'];
+
+  const isHideProfile = hideProfilePages.includes(router.pathname);
+
   return (
     <div className="flex h-100 w-full items-center justify-between bg-orange-400 px-24 py-16">
       <div
@@ -16,17 +20,19 @@ export default function Gnb() {
         <Image src={'/icons/ic-logo.svg'} alt="logo" width={80} height={80} />
         <div>Cook Mate</div>
       </div>
-      <div className="relative">
-        <Image
-          src={'/icons/ic-profile.svg'}
-          alt="profile"
-          width={80}
-          height={80}
-          className="cursor-pointer"
-          onClick={openDropdown}
-        />
-        <Dropdown />
-      </div>
+      {!isHideProfile && (
+        <div className="relative">
+          <Image
+            src={'/icons/ic-profile.svg'}
+            alt="profile"
+            width={80}
+            height={80}
+            className="cursor-pointer"
+            onClick={openDropdown}
+          />
+          <Dropdown />
+        </div>
+      )}
     </div>
   );
 }
