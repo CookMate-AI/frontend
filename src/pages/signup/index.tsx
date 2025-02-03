@@ -29,10 +29,16 @@ export default function Signup() {
                 control={control}
                 rules={{
                   required: '아이디를 입력해 주세요.',
-                  pattern: {
-                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,12}$/,
-                    message:
-                      '아이디는 영어와 숫자가 혼합되어야 하며, 6~12글자여야 합니다. (특수문자 사용 불가)',
+                  validate: (value) => {
+                    const isValid = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,12}$/.test(value);
+                    const forbiddenWords = ['admin', 'fuck'];
+                    if (!isValid) {
+                      return '아이디는 영어와 숫자가 혼합되어야 하며, 6~12글자여야 합니다. (특수문자 사용 불가)';
+                    }
+                    if (forbiddenWords.some((word) => value.toLowerCase().includes(word))) {
+                      return '아이디에 유효하지 않은 단어를 사용할 수 없습니다.';
+                    }
+                    return true;
                   },
                 }}
                 render={({ field }) => (
@@ -52,7 +58,7 @@ export default function Signup() {
             <Button
               label="중복확인"
               variant="outlinePrimary"
-              className="h-45 w-140 text-14 font-bold"
+              className="h-50 w-140 text-14 font-bold"
             />
           </div>
 
@@ -85,7 +91,7 @@ export default function Signup() {
             <Button
               label="인증번호 전송"
               variant="outlinePrimary"
-              className="h-45 w-140 text-14 font-bold"
+              className="h-50 w-140 text-14 font-bold"
             />
           </div>
 
@@ -114,7 +120,7 @@ export default function Signup() {
             <Button
               label="인증하기"
               variant="outlinePrimary"
-              className="h-45 w-140 text-14 font-bold"
+              className="h-50 w-140 text-14 font-bold"
             />
           </div>
 

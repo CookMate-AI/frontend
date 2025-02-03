@@ -73,6 +73,7 @@ export default {
       },
       animation: {
         bounce: 'bounce 1s infinite',
+        press: 'press 0.2s ease-in-out',
       },
       keyframes: {
         bounce: {
@@ -85,8 +86,13 @@ export default {
             animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
           },
         },
+        press: {
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(0.95)' },
+          '100%': { transform: 'scale(1)' },
+        },
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
 } satisfies Config;

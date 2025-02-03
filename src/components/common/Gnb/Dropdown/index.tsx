@@ -24,7 +24,7 @@ export default function Dropdown() {
 
   return (
     <div
-      className="absolute left-1/2 top-70 z-10 flex h-120 w-110 -translate-x-1/2 transform flex-col rounded-12 bg-gray-100 shadow-md"
+      className="absolute left-1/2 top-70 z-10 flex h-120 w-110 -translate-x-1/2 transform flex-col rounded-12 bg-white shadow-md"
       ref={ref}
     >
       <button

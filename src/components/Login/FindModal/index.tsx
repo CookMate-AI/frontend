@@ -103,7 +103,7 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
               <Button
                 label="인증번호 전송"
                 variant="outlinePrimary"
-                className="h-40 w-105 flex-shrink-0 text-12 font-bold"
+                className="h-45 w-105 flex-shrink-0 text-12 font-bold"
               />
             </div>
 
@@ -132,7 +132,7 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
               <Button
                 label="인증하기"
                 variant="outlinePrimary"
-                className="h-40 w-105 flex-shrink-0 text-12 font-bold"
+                className="h-45 w-105 flex-shrink-0 text-12 font-bold"
               />
             </div>
 
