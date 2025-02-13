@@ -10,7 +10,7 @@ export default function Index() {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center bg-beige-200">
+    <div className="relative flex flex-col items-center justify-center">
       <div className="flex h-310 w-full flex-col items-center justify-center bg-beige-300">
         <div className="flex items-center justify-center gap-10 text-30 font-extrabold">
           <span className="text-yellow">잔반 걱정 없는</span>
