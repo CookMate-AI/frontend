@@ -21,14 +21,14 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
 
   const {
     isOpen: isIdOpen,
-    closeModal: closeIdModal,
     openModal: openIdModal,
+    closeModal: closeIdModal,
   } = useAlertIdModalStore();
 
   const {
     isOpen: isPwOpen,
-    closeModal: closePwModal,
     openModal: openPwModal,
+    closeModal: closePwModal,
   } = useAlertPasswordModalStore();
 
   const handleClose = (e: React.MouseEvent) => {

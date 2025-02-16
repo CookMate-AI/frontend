@@ -58,8 +58,18 @@ export default {
           800: '#34ADC0',
           900: '#239BAE',
         },
+        yellow: {
+          50: '#FEF3C7',
+          100: '#FDE047',
+          200: '#FFD700',
+          300: '#FACC15',
+          400: '#EAB308',
+        },
+        amber: {
+          300: '#FCD34D',
+          400: '#FBBF24',
+        },
         navy: '#04394A',
-        yellow: '#FFD700',
         error: '#FFF1F2',
       },
       fontFamily: {

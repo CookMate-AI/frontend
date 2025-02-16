@@ -18,7 +18,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex min-h-screen justify-center bg-beige-200 pb-20 pt-100">
+    <div className="flex justify-center pb-20 pt-60">
       <div className="relative h-940 w-650 rounded-24 bg-white px-30 py-60 shadow-md">
         <h1 className="text-center text-30 font-bold text-gray-800">회원가입</h1>
         <form onSubmit={handleSubmit(onsubmit)} className="mt-70 flex flex-col gap-30">
