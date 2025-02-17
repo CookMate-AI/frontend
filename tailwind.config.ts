@@ -58,17 +58,51 @@ export default {
           800: '#34ADC0',
           900: '#239BAE',
         },
+        yellow: {
+          50: '#FEF3C7',
+          100: '#FDE047',
+          200: '#FFD700',
+          300: '#FACC15',
+          400: '#EAB308',
+        },
+        amber: {
+          300: '#FCD34D',
+          400: '#FBBF24',
+        },
         navy: '#04394A',
+        error: '#FFF1F2',
       },
       fontFamily: {
-        sans: ['WAGURITTF', 'sans-serif'],
+        sans: ['NPSfont', 'MoveSans', 'sans-serif'],
       },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+      borderRadius: px0_100,
+      boxShadow: {
+        sm: '0px 8px 13px 0px rgba(25, 31, 40, 0.04)',
+        md: '3px 6px 28px 0px rgba(25, 31, 40, 0.08)',
+        lg: '0px 16px 34px 0px rgba(25, 31, 40, 0.16)',
+      },
+      animation: {
+        bounce: 'bounce 1s infinite',
+        press: 'press 0.2s ease-in-out',
+      },
+      keyframes: {
+        bounce: {
+          '0%, 100%': {
+            transform: 'translateY(-25%)',
+            animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
+          },
+          '50%': {
+            transform: 'translateY(0)',
+            animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+          },
+        },
+        press: {
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(0.95)' },
+          '100%': { transform: 'scale(1)' },
+        },
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
 } satisfies Config;
