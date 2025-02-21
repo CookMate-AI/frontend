@@ -1,3 +1,3 @@
-export type RecipeProps = {
+export interface RecipeProps {
   recipe: string;
-};
+}

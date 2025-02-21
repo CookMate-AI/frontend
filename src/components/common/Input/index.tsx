@@ -31,8 +31,6 @@ export default function Input({
     className,
   );
 
-  console.log(baseStyles);
-
   return (
     <div className="w-full">
       <label className="mb-4 ml-4 block text-sm text-gray-700">{label}</label>

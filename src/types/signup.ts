@@ -1,4 +1,4 @@
-export type FormValues = {
+export interface FormValues  {
   id: string;
   email: string;
   emailConfirm: string;
@@ -6,3 +6,9 @@ export type FormValues = {
   passwordConfirm: string;
   agree: boolean;
 };
+
+export interface SignupRequest {
+  userId: string;
+  userPw: string;
+  email: string;
+}

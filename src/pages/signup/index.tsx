@@ -2,6 +2,7 @@ import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import { Controller, useForm } from 'react-hook-form';
 import { FormValues } from '@/types/signup';
+// import { postSignup } from '@/lib/api/signup';
 
 export default function Signup() {
   const {
@@ -12,9 +13,29 @@ export default function Signup() {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const onsubmit = (data: FormValues) => {
-    console.log(data);
-    alert('회원가입이 완료되었습니다.');
+  const onsubmit = async (data: FormValues) => {
+    try {
+      const signupData = {
+        userId: data.id,
+        userPw: data.password,
+        email: data.email,
+      };
+
+      // API 호출
+      // const response = await postSignup(signupData);
+
+      console.log(signupData);
+
+      alert('회원가입이 완료되었습니다.');
+
+      // router.push('/login');
+    } catch (error) {
+      if (typeof error === 'string') {
+        alert(error);
+      } else {
+        alert('회원가입 중 오류가 발생했습니다.');
+      }
+    }
   };
 
   return (
