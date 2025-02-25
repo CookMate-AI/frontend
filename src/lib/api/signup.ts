@@ -7,9 +7,9 @@ interface SignupData {
   email: string;
 }
 
-interface CertificationData {
+export interface CertificationData {
   email: string;
-  code: number;
+  code: string;
 }
 
 export const getCheckUserId = async (userId: string) => {
@@ -26,19 +26,19 @@ export const getCheckUserId = async (userId: string) => {
   }
 };
 
-export const postSendEmail =  async (userEmail: string) => {
+export const postCheckEmailSendEmail = async (userEmail: string) => {
   try {
-    const res = await api.post('/users/check-Email/send-Email', userEmail);
+    const res = await api.post('/users/check-Email/send-Email', { email: userEmail });
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {
       throw error.response?.data || error.message;
     }
-    throw new Error('send-Email 에러 발생');
+    throw new Error('check-Email/send-Email 에러 발생');
   }
-}
+};
 
-export const postCertification =  async (userData: CertificationData) => {
+export const postCheckEmailCertification = async (userData: CertificationData) => {
   try {
     const res = await api.post('/users/check-Email/certification', userData);
     return res.data;
@@ -46,9 +46,9 @@ export const postCertification =  async (userData: CertificationData) => {
     if (error instanceof AxiosError) {
       throw error.response?.data || error.message;
     }
-    throw new Error('send-Email 에러 발생');
+    throw new Error('check-Email/certification 에러 발생');
   }
-}
+};
 
 export const postSignup = async (userData: SignupData) => {
   try {

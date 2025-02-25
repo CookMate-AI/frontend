@@ -5,6 +5,7 @@ import { FormValues } from '@/types/login';
 import { useRouter } from 'next/router';
 import FindModal from '@/components/Login/FindModal';
 import { useFindIdModalStore, useFindPasswordModalStore } from '@/stores/useModalStore';
+import { postLogin } from '@/lib/api/login';
 
 export default function Login() {
   const {
@@ -27,10 +28,21 @@ export default function Login() {
     openModal: openPwModal,
   } = useFindPasswordModalStore();
 
-  const onsubmit = (data: FormValues) => {
-    console.log(data);
-    alert('로그인이 완료되었습니다.');
-    router.push('/');
+  const onsubmit = async (data: FormValues) => {
+    try {
+      const loginData = {
+        username: data.id,
+        password: data.password,
+      };
+      const result = await postLogin(loginData);
+      if (result) {
+        alert(result.message);
+      }
+      // router.push('/');
+    } catch (error) {
+      console.error('로그인 중 에러 발생', error);
+    }
+    console.log(localStorage.getItem("token"));
   };
 
   const handleSignup = () => {
@@ -46,6 +58,7 @@ export default function Login() {
             <Controller
               name="id"
               control={control}
+              defaultValue=""
               rules={{
                 required: '아이디를 입력해 주세요.',
                 pattern: {
@@ -73,6 +86,7 @@ export default function Login() {
             <Controller
               name="password"
               control={control}
+              defaultValue=""
               rules={{
                 required: '비밀번호를 입력해 주세요.',
                 pattern: {
