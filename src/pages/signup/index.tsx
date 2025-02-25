@@ -31,11 +31,7 @@ export default function Signup() {
       }
       // router.push('/login');
     } catch (error) {
-      if (typeof error === 'string') {
-        console.error(error);
-      } else {
-        console.error('회원가입 중 에러 발생', error);
-      }
+      console.error('회원가입 중 에러 발생', error);
     }
   };
 
@@ -74,7 +70,7 @@ export default function Signup() {
         alert(result.message);
       }
     } catch (error) {
-      console.error('인증번호 전송 중 에러 발생', error);
+      console.error('인증번호 확인 중 에러 발생', error);
     }
   };
 
@@ -130,6 +126,7 @@ export default function Signup() {
               <Controller
                 name="email"
                 control={control}
+                defaultValue=""
                 rules={{
                   required: '이메일을 입력해 주세요.',
                   pattern: {
@@ -164,6 +161,7 @@ export default function Signup() {
               <Controller
                 name="emailConfirm"
                 control={control}
+                defaultValue=""
                 rules={{ required: '인증번호를 입력해 주세요.' }}
                 render={({ field }) => (
                   <Input
@@ -193,6 +191,7 @@ export default function Signup() {
             <Controller
               name="password"
               control={control}
+              defaultValue=""
               rules={{
                 required: '비밀번호를 입력해 주세요.',
                 pattern: {
@@ -219,6 +218,7 @@ export default function Signup() {
             <Controller
               name="passwordConfirm"
               control={control}
+              defaultValue=""
               rules={{
                 required: '비밀번호를 확인해 주세요.',
                 validate: (value) => value === watch('password') || '비밀번호가 일치하지 않습니다.',
