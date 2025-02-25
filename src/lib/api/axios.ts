@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'https://cook-mate-api',
+  baseURL: '/api',
   headers: {
     'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': true,
   },
   withCredentials: true,
 });

@@ -2,7 +2,12 @@ import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import { Controller, useForm } from 'react-hook-form';
 import { FormValues } from '@/types/signup';
-// import { postSignup } from '@/lib/api/signup';
+import {
+  getCheckUserId,
+  postCheckEmailSendEmail,
+  postCheckEmailCertification,
+  postSignup,
+} from '@/lib/api/signup';
 
 export default function Signup() {
   const {
@@ -20,21 +25,56 @@ export default function Signup() {
         userPw: data.password,
         email: data.email,
       };
-
-      // API 호출
-      // const response = await postSignup(signupData);
-
-      console.log(signupData);
-
-      alert('회원가입이 완료되었습니다.');
-
+      const result = await postSignup(signupData);
+      if (result) {
+        alert(result.message);
+      }
       // router.push('/login');
     } catch (error) {
       if (typeof error === 'string') {
-        alert(error);
+        console.error(error);
       } else {
-        alert('회원가입 중 오류가 발생했습니다.');
+        console.error('회원가입 중 에러 발생', error);
       }
+    }
+  };
+
+  const onCheckUserId = async () => {
+    const userId = watch('id');
+    try {
+      const result = await getCheckUserId(userId);
+      alert(`${result.message}`);
+    } catch (error) {
+      console.error('중복확인 중 에러 발생', error);
+    }
+  };
+
+  const onCheckEmail = async () => {
+    const userEmail = watch('email');
+    try {
+      const result = await postCheckEmailSendEmail(userEmail);
+      if (result) {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error('인증번호 전송 중 에러 발생', error);
+    }
+  };
+
+  const onCheckEmailCertification = async () => {
+    const userEmail = watch('email');
+    const emailConfirm = watch('emailConfirm');
+    try {
+      const userData = {
+        email: userEmail,
+        code: emailConfirm,
+      };
+      const result = await postCheckEmailCertification(userData);
+      if (result) {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error('인증번호 전송 중 에러 발생', error);
     }
   };
 
@@ -48,6 +88,7 @@ export default function Signup() {
               <Controller
                 name="id"
                 control={control}
+                defaultValue=""
                 rules={{
                   required: '아이디를 입력해 주세요.',
                   validate: (value) => {
@@ -80,6 +121,7 @@ export default function Signup() {
               label="중복확인"
               variant="outlinePrimary"
               className="h-50 w-140 text-14 font-bold"
+              onClick={onCheckUserId}
             />
           </div>
 
@@ -113,6 +155,7 @@ export default function Signup() {
               label="인증번호 전송"
               variant="outlinePrimary"
               className="h-50 w-140 text-14 font-bold"
+              onClick={onCheckEmail}
             />
           </div>
 
@@ -142,6 +185,7 @@ export default function Signup() {
               label="인증하기"
               variant="outlinePrimary"
               className="h-50 w-140 text-14 font-bold"
+              onClick={onCheckEmailCertification}
             />
           </div>
 
