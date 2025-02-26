@@ -6,7 +6,12 @@ export default function Index() {
   const router = useRouter();
 
   const handleMove = () => {
-    router.push('/login');
+    const token = localStorage.getItem('token');
+    if (token) {
+      router.push('/recipes');
+    } else {
+      router.push('/login');
+    }
   };
 
   return (
