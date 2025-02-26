@@ -73,7 +73,7 @@ export const postFindIdCertification = async (userData: CertificationData) => {
 export const postFindPw = async (userData: FindPwData) => {
   try {
     const res = await api.post(`/users/find-pw`, userData);
-    return res.data;
+    return res;
   } catch (error) {
     if (error instanceof AxiosError) {
       throw error.response?.data || error.message;
