@@ -19,21 +19,30 @@ interface FindPwData {
 export const postLogin = async (userData: LoginData) => {
   try {
     const formData = new FormData();
-    formData.append("username", userData.username);
-    formData.append("password", userData.password);
+    formData.append('username', userData.username);
+    formData.append('password', userData.password);
 
     const res = await api.post(`/users/signin`, formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
     });
 
-    const token = res.headers["authorization"];
-    if (token) {
-      localStorage.setItem("token", token);
-      // console.log("토큰이 로컬스토리지에 저장됨:", token);
-    } else {
-      console.warn("토큰이 응답에 없음");
+    const token = res.headers['authorization'];
+    const nickname = res.headers['user-nickname'];
+
+    if (typeof window !== 'undefined') {
+      if (token) {
+        localStorage.setItem('token', token);
+      } else {
+        console.warn('토큰이 응답에 없음');
+      }
+
+      if (nickname) {
+        localStorage.setItem('userNickname', nickname);
+      } else {
+        console.warn('닉네임이 응답에 없음');
+      }
     }
 
     return res.data;
@@ -41,10 +50,9 @@ export const postLogin = async (userData: LoginData) => {
     if (error instanceof AxiosError) {
       throw error.response?.data || error.message;
     }
-    throw new Error("signin 에러 발생");
+    throw new Error('signin 에러 발생');
   }
 };
-
 
 export const postFindIdSendEmail = async (userEmail: string) => {
   try {
