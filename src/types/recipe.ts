@@ -1,3 +1,4 @@
 export interface RecipeProps {
-  recipe: string;
+  foodName: string;
+  index: number;
 }

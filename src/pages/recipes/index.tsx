@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useState, FormEvent, useEffect, useRef } from 'react';
 import { UserMessage, BotMessage } from '@/types/messages';
 import Recipe from '@/components/common/Recipe';
+import { postMenu } from '@/lib/api/recipe';
 
 type Message = UserMessage | BotMessage;
 
@@ -10,23 +11,28 @@ export default function Recipes() {
   const [messages, setMessages] = useState<Message[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!ingredients.trim()) return;
 
-    // 입력한 값을 배열로 변환하는 코드
-    // const ingredientList = ingredients.split(',').map((item) => item.trim());
+    try {
+      const result = await postMenu(ingredients);
+      console.log(result);
 
-    setMessages([
-      ...messages,
-      { type: 'user', content: ingredients },
-      {
-        type: 'bot',
-        content: `추천 레시피`,
-        recipes: ['김치찌개', '부대찌개', '된장찌개'],
-      },
-    ]);
+      setMessages([
+        ...messages,
+        { type: 'user', content: ingredients },
+        {
+          type: 'bot',
+          content: `AI 추천 레시피`,
+          recipes: result,
+        },
+      ]);
+    } catch (error) {
+      console.error('메뉴 추천 중 에러 발생', error);
+      // 에러 발생 시 메뉴 추천 불가 UI (+ 잘못된 재료 넣었을 때 추천 불가 UI)
+    }
 
     setIngredients('');
   };
@@ -73,9 +79,10 @@ export default function Recipes() {
               </p>
               {message.type === 'bot' && message.recipes && (
                 <div className="flex gap-12 rounded-b-lg bg-white p-12">
-                  {message.recipes.map((recipe, i) => (
-                    <Recipe key={i} recipe={recipe} />
-                  ))}
+                  {message.recipes.map((recipe, index) => {
+                    console.log(`Recipe ${index}:`, recipe);
+                    return <Recipe key={`${recipe}-${index}`} foodName={recipe} index={index} />;
+                  })}
                 </div>
               )}
             </div>
