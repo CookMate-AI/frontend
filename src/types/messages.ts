@@ -8,3 +8,8 @@ export interface BotMessage {
   content: string;
   recipes: string[];
 }
+
+export interface ErrorMessage {
+  type: 'error';
+  content: string[];
+}

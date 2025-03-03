@@ -104,5 +104,5 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography'), require('tailwind-scrollbar-hide')],
 } satisfies Config;

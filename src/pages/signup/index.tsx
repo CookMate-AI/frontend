@@ -37,6 +37,12 @@ export default function Signup() {
 
   const onCheckUserId = async () => {
     const userId = watch('id');
+
+    if (!userId) {
+      alert('아이디를 입력해 주세요.');
+      return;
+    }
+
     try {
       const result = await getCheckUserId(userId);
       alert(`${result.message}`);
@@ -47,6 +53,12 @@ export default function Signup() {
 
   const onCheckEmail = async () => {
     const userEmail = watch('email');
+
+    if (!userEmail) {
+      alert('이메일을 입력해 주세요.');
+      return;
+    }
+
     try {
       const result = await postCheckEmailSendEmail(userEmail);
       if (result) {
@@ -60,6 +72,12 @@ export default function Signup() {
   const onCheckEmailCertification = async () => {
     const userEmail = watch('email');
     const emailConfirm = watch('emailConfirm');
+
+    if (!emailConfirm) {
+      alert('인증번호를 입력해 주세요.');
+      return;
+    }
+
     try {
       const userData = {
         email: userEmail,

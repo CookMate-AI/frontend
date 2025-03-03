@@ -42,7 +42,7 @@ export default function Login() {
     } catch (error) {
       console.error('로그인 중 에러 발생', error);
     }
-    console.log(localStorage.getItem("token"));
+    console.log(localStorage.getItem('token'));
   };
 
   const handleSignup = () => {
@@ -90,7 +90,7 @@ export default function Login() {
               rules={{
                 required: '비밀번호를 입력해 주세요.',
                 pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/,
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\W_]{8,}$/,
                   message: '비밀번호는 영문, 숫자 포함 8자 이상입니다.',
                 },
               }}

@@ -9,7 +9,7 @@ interface RecipeData {
 
 export const postMenu = async (ingredients: string) => {
   try {
-    const res = await api.post(`/recipe/menu`, ingredients);
+    const res = await api.post(`/recipe/menu`, { ingredients: ingredients });
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {
@@ -19,9 +19,9 @@ export const postMenu = async (ingredients: string) => {
   }
 };
 
-export const postRecommend = async (food: string) => {
+export const postRecommend = async (foodName: string) => {
   try {
-    const res = await api.post(`/recipe/recommend`, food);
+    const res = await api.post(`/recipe/recommend`, {food: foodName});
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {
