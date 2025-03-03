@@ -7,7 +7,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div>
       <Gnb />
-      <div className="min-h-[calc(100vh-260px)] w-full bg-beige-200">
+      <div className="min-h-[calc(100vh-120px)] lg:min-h-[calc(100vh-260px)] w-full bg-beige-200">
         <Component {...pageProps} />
       </div>
       <Footer />
