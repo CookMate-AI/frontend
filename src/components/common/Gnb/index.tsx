@@ -12,22 +12,23 @@ export default function Gnb() {
   const isHideProfile = hideProfilePages.includes(router.pathname);
 
   return (
-    <div className="flex h-100 w-full items-center justify-between bg-orange-400 px-24 py-16">
+    <div className="flex h-50 w-full items-center justify-between bg-orange-400 px-24 py-16 lg:h-100">
       <div
-        className="flex cursor-pointer items-center justify-center text-20 text-navy"
+        className="flex cursor-pointer items-center justify-center text-16 lg:text-20 text-navy"
         onClick={() => router.push('/')}
       >
-        <Image src={'/icons/ic-logo.svg'} alt="logo" width={80} height={80} />
+        <div className="relative h-40 w-40 lg:h-80 lg:w-80">
+          <Image src={'/icons/ic-logo.svg'} alt="logo" fill className="object-contain" />
+        </div>
         <div>Cook Mate</div>
       </div>
       {!isHideProfile && (
-        <div className="relative">
+        <div className="relative h-50 w-50 lg:h-80 lg:w-80">
           <Image
             src={'/icons/ic-profile.svg'}
             alt="profile"
-            width={80}
-            height={80}
-            className="cursor-pointer"
+            fill
+            className="cursor-pointer object-contain"
             onClick={openDropdown}
           />
           <Dropdown />
