@@ -3,10 +3,11 @@ import { RecipeProps } from '@/types/recipe';
 import RecipeModal from '../RecipeModal';
 import { postRecommend } from '@/lib/api/recipe';
 import { useState } from 'react';
+import { RecipeData } from '@/types/recipe';
 
 export default function Recipe({ foodName, index }: RecipeProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [data, setData] = useState<string>('');
+  const [data, setData] = useState<RecipeData | null>(null);
   const youtubeUrlForm = `https://www.youtube.com/results?search_query=${foodName}+레시피`;
 
   const handleClick = async () => {
@@ -14,7 +15,7 @@ export default function Recipe({ foodName, index }: RecipeProps) {
       console.log(`Clicking recipe ${index}: ${foodName}`);
       const result = await postRecommend(foodName);
       console.log(`API response for ${foodName}:`, result);
-      setData(result.recipe);
+      setData(result);
       setIsModalOpen(true);
     } catch (error) {
       console.error(`레시피 추천 중 에러 발생 (${foodName}):`, error);
@@ -23,7 +24,7 @@ export default function Recipe({ foodName, index }: RecipeProps) {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setData('');
+    setData(null);
   };
 
   return (

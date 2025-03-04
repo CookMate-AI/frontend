@@ -1,11 +1,6 @@
 import { api } from './axios';
 import { AxiosError } from 'axios';
-
-interface RecipeData {
-  food: string;
-  content: string;
-  category: number;
-}
+import { RecipeSaveData } from '@/types/recipe';
 
 export const postMenu = async (ingredients: string) => {
   try {
@@ -31,7 +26,7 @@ export const postRecommend = async (foodName: string) => {
   }
 };
 
-export const postSave = async (recipeData: RecipeData) => {
+export const postSave = async (recipeData: RecipeSaveData) => {
   try {
     const res = await api.post(`/recipe/save`, recipeData);
     return res.data;
