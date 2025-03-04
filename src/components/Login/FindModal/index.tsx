@@ -177,7 +177,7 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
       onClick={handleClose}
     >
       <div
-        className="relative h-536 w-632 rounded-24 border-2 border-orange-400 bg-beige-200 p-24 shadow-lg"
+        className="relative h-436 w-400 rounded-24 border-2 border-orange-400 bg-beige-200 p-24 shadow-lg lg:h-536 lg:w-632"
         onClick={(e) => e.stopPropagation()}
       >
         <Image
@@ -188,14 +188,14 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
           className="absolute right-24 cursor-pointer"
           onClick={handleClose}
         />
-        <div className="flex items-center justify-center gap-8 text-20 font-bold">
+        <div className="flex items-center justify-center gap-8 text-16 font-bold lg:text-20">
           {type === 'id' ? <p>아이디</p> : <p>비밀번호</p>}
           <p>찾기</p>
         </div>
         {type === 'id' ? (
           <form
             onSubmit={handleSubmit(onsubmitId)}
-            className="mt-30 flex h-420 w-full flex-col items-center justify-center gap-30 rounded-20 bg-white p-30"
+            className="mt-30 flex h-320 w-full flex-col items-center justify-center gap-30 rounded-20 bg-white p-30 lg:h-420"
           >
             <div className="relative flex w-full items-end gap-16">
               <div className="w-full">
@@ -221,13 +221,15 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
                   )}
                 />
                 {errors.email && (
-                  <p className="absolute left-3 text-13 text-red-400">{errors.email.message}</p>
+                  <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
               <Button
                 label="인증번호 전송"
                 variant="outlinePrimary"
-                className="h-45 w-105 flex-shrink-0 text-12 font-bold"
+                className="h-45 w-80 flex-shrink-0 text-12 font-bold lg:w-105"
                 onClick={onCheckEmail}
               />
             </div>
@@ -250,7 +252,7 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
                   )}
                 />
                 {errors.emailConfirm && (
-                  <p className="absolute left-3 text-13 text-red-400">
+                  <p className="absolute left-3 text-11 text-red-400 lg:text-13">
                     {errors.emailConfirm.message}
                   </p>
                 )}
@@ -258,7 +260,7 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
               <Button
                 label="인증하기"
                 variant="outlinePrimary"
-                className="h-45 w-105 flex-shrink-0 text-12 font-bold"
+                className="h-45 w-80 flex-shrink-0 text-12 font-bold lg:w-105"
                 onClick={onCheckEmailCertification}
               />
             </div>
@@ -266,7 +268,7 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
         ) : (
           <form
             onSubmit={handleSubmit(onsubmitPassword)}
-            className="mt-30 flex h-420 w-full flex-col items-center justify-center gap-30 rounded-20 bg-white p-24"
+            className="mt-30 flex h-320 w-full flex-col items-center justify-center gap-30 rounded-20 bg-white p-24 lg:h-420"
           >
             <div className="relative w-full">
               <Controller
@@ -292,7 +294,9 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
                 )}
               />
               {errors.id && (
-                <p className="absolute left-3 text-13 text-red-400">{errors.id.message}</p>
+                <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                  {errors.id.message}
+                </p>
               )}
             </div>
 
@@ -320,12 +324,14 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
                   )}
                 />
                 {errors.email && (
-                  <p className="absolute left-3 text-13 text-red-400">{errors.email.message}</p>
+                  <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
             </div>
 
-            <Button label="찾기" type="submit" className="h-40 w-120" onClick={onFindPw} />
+            <Button label="찾기" type="submit" className="w-80 h-35 lg:h-40 lg:w-120 text-14 lg:text-16" onClick={onFindPw} />
           </form>
         )}
       </div>

@@ -51,8 +51,8 @@ export default function Login() {
 
   return (
     <div className="flex justify-center pb-20 pt-60">
-      <div className="relative h-640 w-650 rounded-24 bg-white px-30 py-60 shadow-md">
-        <h1 className="text-center text-30 font-bold text-gray-800">로그인</h1>
+      <div className="relative h-550 w-400 rounded-24 bg-white px-30 py-40 lg:py-60 shadow-md lg:h-640 lg:w-650">
+        <h1 className="text-center text-20 font-bold text-gray-800 lg:text-30">로그인</h1>
         <form onSubmit={handleSubmit(onsubmit)} className="mt-70 flex flex-col gap-30">
           <div className="relative">
             <Controller
@@ -78,7 +78,7 @@ export default function Login() {
               )}
             />
             {errors.id && (
-              <p className="absolute left-3 text-13 text-red-400">{errors.id.message}</p>
+              <p className="absolute left-3 text-11 text-red-400 lg:text-13">{errors.id.message}</p>
             )}
           </div>
 
@@ -105,21 +105,25 @@ export default function Login() {
               )}
             />
             {errors.password && (
-              <p className="absolute left-3 text-13 text-red-400">{errors.password.message}</p>
+              <p className="absolute left-3 text-11 text-red-400 lg:text-13">{errors.password.message}</p>
             )}
           </div>
 
           <div className="absolute bottom-100 left-1/2 flex -translate-x-1/2 transform gap-10">
-            <Button label="로그인" type="submit" className="h-50 w-140 text-20" />
+            <Button
+              label="로그인"
+              type="submit"
+              className="h-50 w-100 text-16 lg:w-140 lg:text-20"
+            />
             <Button
               label="회원가입"
               variant="secondary"
-              className="h-50 w-140 text-20"
+              className="h-50 w-100 text-16 lg:w-140 lg:text-20"
               onClick={handleSignup}
             />
           </div>
 
-          <div className="absolute bottom-60 left-1/2 flex -translate-x-1/2 transform gap-10 text-14 text-gray-800">
+          <div className="absolute bottom-60 left-1/2 flex -translate-x-1/2 transform gap-10 text-13 text-gray-800 lg:text-14">
             <div className="cursor-pointer" onClick={openIdModal}>
               아이디 찾기
             </div>
