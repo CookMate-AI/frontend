@@ -3,7 +3,8 @@ import RecipeViewer from './RecipeViewer';
 import Image from 'next/image';
 import Button from '../Button';
 import { RecipeData, RecipeSaveData } from '@/types/recipe';
-import { postSave } from '@/lib/api/recipe';
+import { postSave, deleteRecipe } from '@/lib/api/recipe';
+import { useRouter } from 'next/router';
 
 interface RecipeModalProps {
   recipeData: RecipeData | null;
@@ -12,6 +13,8 @@ interface RecipeModalProps {
   foodName: string;
   setRecipeData: (data: RecipeData | null) => void;
   closeModal: () => void;
+  recipeId?: number;
+  onDeleteSuccess?: () => void;
 }
 
 export default function RecipeModal({
@@ -21,8 +24,12 @@ export default function RecipeModal({
   foodName,
   setRecipeData,
   closeModal,
+  recipeId,
+  onDeleteSuccess,
 }: RecipeModalProps) {
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const router = useRouter();
+  const isMyPage = router.pathname === '/mypage' || router.pathname.startsWith('/mypage/');
 
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -31,8 +38,6 @@ export default function RecipeModal({
   };
 
   if (!isOpen) return null;
-
-  console.log(recipeData);
 
   const handleSaveRecipe = async () => {
     try {
@@ -47,7 +52,22 @@ export default function RecipeModal({
         setSaveSuccess(true);
       }
     } catch (error) {
-      console.error("레시피 저장 중 에러 발생:", error);
+      console.error('레시피 저장 중 에러 발생:', error);
+    }
+  };
+
+  const handleDeleteRecipe = async () => {
+    try {
+      if (recipeId) {
+        await deleteRecipe(recipeId);
+        closeModal();
+
+        if (onDeleteSuccess) {
+          onDeleteSuccess();
+        }
+      }
+    } catch (error) {
+      console.error('레시피 삭제 중 에러 발생:', error);
     }
   };
 
@@ -79,13 +99,23 @@ export default function RecipeModal({
           </a>
         </div>
         <div className="flex justify-end gap-10">
-          <Button
-            variant={saveSuccess ? 'outlineDisabled' : 'outlinePrimary'}
-            type="button"
-            label="저장하기"
-            className="h-50 border-2 font-bold"
-            onClick={handleSaveRecipe}
-          />
+          {isMyPage ? (
+            <Button
+              variant={saveSuccess ? 'outlineDisabled' : 'outlinePrimary'}
+              type="button"
+              label="삭제하기"
+              className="h-50 border-2 font-bold"
+              onClick={handleDeleteRecipe}
+            />
+          ) : (
+            <Button
+              variant={saveSuccess ? 'outlineDisabled' : 'outlinePrimary'}
+              type="button"
+              label="저장하기"
+              className="h-50 border-2 font-bold"
+              onClick={handleSaveRecipe}
+            />
+          )}
           <Button
             variant="outlineSecondary"
             type="button"

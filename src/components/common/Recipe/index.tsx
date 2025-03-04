@@ -5,7 +5,7 @@ import { postRecommend } from '@/lib/api/recipe';
 import { useState } from 'react';
 import { RecipeData } from '@/types/recipe';
 
-export default function Recipe({ foodName, index }: RecipeProps) {
+export default function Recipe({ foodName, index, recipeId, onDeleteSuccess }: RecipeProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState<RecipeData | null>(null);
   const youtubeUrlForm = `https://www.youtube.com/results?search_query=${foodName}+레시피`;
@@ -31,9 +31,9 @@ export default function Recipe({ foodName, index }: RecipeProps) {
     <>
       <div className="relative cursor-pointer active:animate-press" onClick={handleClick}>
         <div className="relative h-140 w-110 lg:h-175 lg:w-135">
-          <Image src={'/icons/ic-recipe.svg'} alt="recipe" fill className='object-contain' />
+          <Image src={'/icons/ic-recipe.svg'} alt="recipe" fill className="object-contain" />
         </div>
-        <p className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 break-words px-10 text-center text-16 font-bold lg:text-20">
+        <p className="absolute left-1/2 top-1/2 ml-3 w-full -translate-x-1/2 -translate-y-1/2 break-words text-center text-16 font-bold lg:text-20">
           {foodName}
         </p>
       </div>
@@ -44,6 +44,8 @@ export default function Recipe({ foodName, index }: RecipeProps) {
         foodName={foodName}
         setRecipeData={setData}
         closeModal={closeModal}
+        recipeId={recipeId}
+        onDeleteSuccess={onDeleteSuccess}
       />
     </>
   );

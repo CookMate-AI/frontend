@@ -16,7 +16,7 @@ export const postMenu = async (ingredients: string) => {
 
 export const postRecommend = async (foodName: string) => {
   try {
-    const res = await api.post(`/recipe/recommend`, {food: foodName});
+    const res = await api.post(`/recipe/recommend`, { food: foodName });
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {
@@ -40,7 +40,9 @@ export const postSave = async (recipeData: RecipeSaveData) => {
 
 export const deleteRecipe = async (recipeId: number) => {
   try {
-    const res = await api.delete(`/recipe/${recipeId}`);
+    const res = await api.delete('/recipe/my', {
+      data: { recipeId }
+    });
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {
