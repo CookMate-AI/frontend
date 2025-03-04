@@ -42,7 +42,6 @@ export default function Login() {
     } catch (error) {
       console.error('로그인 중 에러 발생', error);
     }
-    console.log(localStorage.getItem('token'));
   };
 
   const handleSignup = () => {

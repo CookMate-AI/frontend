@@ -18,7 +18,6 @@ export default function Recipes() {
 
     try {
       const result = await postMenu(ingredients);
-      console.log(result);
       if (result[0] === '응답 형식 오류') {
         setMessages([
           ...messages,

@@ -5,16 +5,14 @@ import { postRecommend } from '@/lib/api/recipe';
 import { useState } from 'react';
 import { RecipeData } from '@/types/recipe';
 
-export default function Recipe({ foodName, index, recipeId, onDeleteSuccess }: RecipeProps) {
+export default function Recipe({ foodName, recipeId, onDeleteSuccess }: RecipeProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState<RecipeData | null>(null);
   const youtubeUrlForm = `https://www.youtube.com/results?search_query=${foodName}+레시피`;
 
   const handleClick = async () => {
     try {
-      console.log(`Clicking recipe ${index}: ${foodName}`);
       const result = await postRecommend(foodName);
-      console.log(`API response for ${foodName}:`, result);
       setData(result);
       setIsModalOpen(true);
     } catch (error) {

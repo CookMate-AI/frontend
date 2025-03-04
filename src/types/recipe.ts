@@ -1,6 +1,6 @@
 export interface RecipeProps {
   foodName: string;
-  index: number;
+  index?: number;
   recipeId?: number;
   onDeleteSuccess?: () => void;
 }
