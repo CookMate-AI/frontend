@@ -34,7 +34,7 @@ export default function Mypage() {
           개인정보 수정
         </div>
       </div>
-      <div className="h-750 min-w-550 w-1000 overflow-y-auto rounded-10 border-2 border-gray-400 bg-white scrollbar-hide lg:h-850">
+      <div className="h-650 min-w-550 w-1000 overflow-y-auto rounded-10 border-2 border-gray-400 bg-white scrollbar-hide lg:h-850">
         {activeTab === 'recipes' ? <MyRecipes /> : <EditProfile />}
       </div>
     </div>
