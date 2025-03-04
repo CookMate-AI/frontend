@@ -94,8 +94,8 @@ export default function Signup() {
 
   return (
     <div className="flex justify-center pb-20 pt-60">
-      <div className="relative h-940 w-650 rounded-24 bg-white px-30 py-60 shadow-md">
-        <h1 className="text-center text-30 font-bold text-gray-800">회원가입</h1>
+      <div className="relative h-880 lg:h-940 w-400 rounded-24 bg-white px-30 py-40 lg:py-60 shadow-md lg:w-650">
+        <h1 className="text-center text-20 font-bold text-gray-800 lg:text-30">회원가입</h1>
         <form onSubmit={handleSubmit(onsubmit)} className="mt-70 flex flex-col gap-30">
           <div className="relative flex items-end gap-20">
             <div className="w-full">
@@ -128,13 +128,15 @@ export default function Signup() {
                 )}
               />
               {errors.id && (
-                <p className="absolute left-3 text-13 text-red-400">{errors.id.message}</p>
+                <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                  {errors.id.message}
+                </p>
               )}
             </div>
             <Button
               label="중복확인"
               variant="outlinePrimary"
-              className="h-50 w-140 text-14 font-bold"
+              className="h-50 w-100 text-12 font-bold lg:w-140 lg:text-14"
               onClick={onCheckUserId}
             />
           </div>
@@ -163,13 +165,15 @@ export default function Signup() {
                 )}
               />
               {errors.email && (
-                <p className="absolute left-3 text-13 text-red-400">{errors.email.message}</p>
+                <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                  {errors.email.message}
+                </p>
               )}
             </div>
             <Button
               label="인증번호 전송"
               variant="outlinePrimary"
-              className="h-50 w-140 text-14 font-bold"
+              className="h-50 w-100 text-12 font-bold lg:w-140 lg:text-14"
               onClick={onCheckEmail}
             />
           </div>
@@ -192,7 +196,7 @@ export default function Signup() {
                 )}
               />
               {errors.emailConfirm && (
-                <p className="absolute left-3 text-13 text-red-400">
+                <p className="absolute left-3 text-11 text-red-400 lg:text-13">
                   {errors.emailConfirm.message}
                 </p>
               )}
@@ -200,7 +204,7 @@ export default function Signup() {
             <Button
               label="인증하기"
               variant="outlinePrimary"
-              className="h-50 w-140 text-14 font-bold"
+              className="h-50 w-100 text-12 font-bold lg:w-140 lg:text-14"
               onClick={onCheckEmailCertification}
             />
           </div>
@@ -228,7 +232,9 @@ export default function Signup() {
               )}
             />
             {errors.password && (
-              <p className="absolute left-3 text-13 text-red-400">{errors.password.message}</p>
+              <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                {errors.password.message}
+              </p>
             )}
           </div>
 
@@ -252,7 +258,7 @@ export default function Signup() {
               )}
             />
             {errors.passwordConfirm && (
-              <p className="absolute left-3 text-13 text-red-400">
+              <p className="absolute left-3 text-11 text-red-400 lg:text-13">
                 {errors.passwordConfirm.message}
               </p>
             )}
@@ -267,7 +273,7 @@ export default function Signup() {
             />
             <label
               htmlFor="agree"
-              className={errors.agree ? 'text-13 text-red-400' : 'text-13 text-gray-700'}
+              className={errors.agree ? 'text-11 text-red-400 lg:text-13' : 'text-13 text-gray-700'}
             >
               개인정보 수집 및 이용약관에 동의합니다.
             </label>
@@ -276,7 +282,7 @@ export default function Signup() {
           <Button
             label="가입하기"
             type="submit"
-            className="absolute bottom-50 left-1/2 mt-20 h-50 w-180 -translate-x-1/2 transform text-20"
+            className="absolute bottom-50 left-1/2 mt-20 h-50 w-150 lg:w-180 -translate-x-1/2 transform text-16 lg:text-20"
           />
         </form>
       </div>
