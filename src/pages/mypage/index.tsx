@@ -10,7 +10,7 @@ export default function Mypage() {
 
   return (
     <div className="flex gap-30 px-40 py-60 lg:gap-70 lg:px-80 lg:py-100">
-      <div className="h-260 min-w-100 overflow-hidden rounded-10 border-2 border-gray-400 bg-white lg:h-430 w-230">
+      <div className="h-260 w-230 min-w-100 overflow-hidden rounded-10 border-2 border-gray-400 bg-white lg:h-430">
         <div className="flex h-160 w-full flex-col items-center justify-center gap-24 border-b-2 border-gray-400 lg:h-270">
           <div className="relative h-50 w-50 lg:h-85 lg:w-85">
             <Image src={'/icons/ic-profile-black.svg'} alt="profile" fill />
@@ -34,7 +34,7 @@ export default function Mypage() {
           개인정보 수정
         </div>
       </div>
-      <div className="h-650 min-w-550 w-1000 overflow-y-auto rounded-10 border-2 border-gray-400 bg-white scrollbar-hide lg:h-850">
+      <div className="h-780 w-1000 overflow-y-auto rounded-10 border-2 border-gray-400 bg-white scrollbar-hide lg:h-850">
         {activeTab === 'recipes' ? <MyRecipes /> : <EditProfile />}
       </div>
     </div>

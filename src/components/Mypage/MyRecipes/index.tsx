@@ -13,7 +13,9 @@ export default function MyRecipes() {
     try {
       const result = await getInfo(0);
       setInfoData(result);
-    } catch {}
+    } catch (error) {
+      console.error('저장된 레시피 가져오기 중 에러 발생', error)
+    }
   }, []);
 
   useEffect(() => {
