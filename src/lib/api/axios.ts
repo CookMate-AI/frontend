@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+type FailedRequest = {
+  resolve: (token: string | null) => void;
+  reject: (error: unknown) => void;
+};
+
 export const api = axios.create({
   baseURL: '/api',
   headers: {
@@ -12,10 +17,10 @@ export const api = axios.create({
 // 토큰 갱신 중인지 확인하는 변수
 let isRefreshing = false;
 // 갱신 중에 대기하는 요청 목록
-let failedQueue = [];
+let failedQueue: FailedRequest[] = [];
 
 // 대기 중인 요청 처리
-const processQueue = (error, token = null) => {
+const processQueue = (error: unknown, token = null) => {
   failedQueue.forEach((prom) => {
     if (error) {
       prom.reject(error);
