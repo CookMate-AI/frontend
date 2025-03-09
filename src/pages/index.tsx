@@ -6,7 +6,7 @@ export default function Index() {
   const router = useRouter();
 
   const handleMove = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
     if (token) {
       router.push('/recipes');
     } else {

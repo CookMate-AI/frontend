@@ -31,7 +31,7 @@ export default function Recipe({ foodName, recipeId, onDeleteSuccess }: RecipePr
         <div className="relative h-140 w-110 lg:h-175 lg:w-135">
           <Image src={'/icons/ic-recipe.svg'} alt="recipe" fill className="object-contain" />
         </div>
-        <p className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 break-words text-center text-16 font-bold lg:text-20">
+        <p className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 break-words text-center text-14 font-bold lg:text-20">
           {foodName}
         </p>
       </div>

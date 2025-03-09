@@ -6,9 +6,18 @@ interface AlertModalProps {
   isOpen: boolean;
   onClose: () => void;
   unitClose?: boolean;
+  onClick?: () => void;
+  okCancle?: boolean;
 }
 
-export default function AlertModal({ message, isOpen, onClose, unitClose }: AlertModalProps) {
+export default function AlertModal({
+  message,
+  isOpen,
+  onClose,
+  unitClose,
+  onClick,
+  okCancle,
+}: AlertModalProps) {
   const { closeModal: closeFindModal } = useFindIdModalStore();
   const { closeModal: closePwFindModal } = useFindPasswordModalStore();
 
@@ -20,7 +29,7 @@ export default function AlertModal({ message, isOpen, onClose, unitClose }: Aler
 
   const handleUnit = () => {
     onClose();
-  }
+  };
 
   if (!isOpen) return null;
 
@@ -31,12 +40,29 @@ export default function AlertModal({ message, isOpen, onClose, unitClose }: Aler
     >
       <div className="relative h-336 w-432 rounded-24 border-2 border-orange-400 bg-beige-200 p-24 shadow-lg">
         <div className="flex h-full w-full flex-col items-center justify-center gap-20 rounded-20 bg-gray-50 p-24">
-          <div className='text-center'>{message}</div>
+          <div className="text-center">{message}</div>
           <div className="absolute bottom-45 flex justify-center gap-10">
-            {unitClose ? (
-              <Button label="확인" className="h-30 w-100 text-12" onClick={handleUnit} />
+            {okCancle ? (
+              <>
+                <Button
+                  label="취소"
+                  className="h-30 w-100 text-12"
+                  variant="secondary"
+                  onClick={onClose}
+                />
+                <Button
+                  label="확인"
+                  className="h-30 w-100 text-12"
+                  onClick={() => {
+                    if (onClick) onClick();
+                    handleClose();
+                  }}
+                />
+              </>
+            ) : unitClose ? (
+              <Button label="확인" className="h-30 w-100 text-12" onClick={handleUnit} /> // 모달 창 하나 닫기
             ) : (
-              <Button label="확인" className="h-30 w-100 text-12" onClick={handleClose} />
+              <Button label="확인" className="h-30 w-100 text-12" onClick={handleClose} /> // 모달 창 전체 닫기
             )}
           </div>
         </div>

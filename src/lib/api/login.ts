@@ -33,7 +33,7 @@ export const postLogin = async (userData: LoginData) => {
 
     if (typeof window !== 'undefined') {
       if (token) {
-        localStorage.setItem('token', token);
+        localStorage.setItem('accessToken', token);
       } else {
         console.warn('토큰이 응답에 없음');
       }

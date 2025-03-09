@@ -51,3 +51,12 @@ export const postPw = async (pw: string) => {
     throw error;
   }
 };
+
+export const deleteSecession = async () => {
+  try {
+    const res = await api.delete('/users/secession');
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

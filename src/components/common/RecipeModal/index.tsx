@@ -77,7 +77,7 @@ export default function RecipeModal({
       onClick={handleClose}
     >
       <div
-        className="z-30 flex h-800 w-800 flex-col gap-20 rounded-24 border-2 border-yellow-200 bg-yellow-50 p-24 shadow-lg"
+        className="z-30 flex h-750 w-500 flex-col gap-20 rounded-24 border-2 border-yellow-200 bg-yellow-50 p-24 shadow-lg lg:h-900 lg:w-800"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex w-full flex-col gap-20 overflow-y-auto rounded-20 bg-gray-50 p-18 scrollbar-hide">
@@ -92,7 +92,7 @@ export default function RecipeModal({
             href={videoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-8"
+            className="flex items-center gap-8 text-14 lg:text-16"
           >
             <Image src={'/icons/Youtube_logo.png'} alt="youtube logo" width={40} height={40} />
             {foodName} 레시피 확인하기
@@ -112,7 +112,7 @@ export default function RecipeModal({
               variant={saveSuccess ? 'outlineDisabled' : 'outlinePrimary'}
               type="button"
               label="저장하기"
-              className="h-50 border-2 font-bold"
+              className="h-40 border-2 font-bold lg:h-50 text-14 lg:text-16"
               onClick={handleSaveRecipe}
             />
           )}
@@ -120,7 +120,7 @@ export default function RecipeModal({
             variant="outlineSecondary"
             type="button"
             label="닫기"
-            className="h-50 border-2 font-bold"
+            className="h-40 border-2 font-bold lg:h-50 text-14 lg:text-16"
             onClick={closeModal}
           />
         </div>
