@@ -1,138 +1,296 @@
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
-import { FormValues } from '@/types/editProfile';
+import { FormValues, UserInfoData, ChangeUserData } from '@/types/editProfile';
 import { Controller, useForm } from 'react-hook-form';
 import usePasswordStore from '@/stores/usePasswordStore';
-import { useState } from 'react';
+import { useDeleteAccountModal } from '@/stores/useModalStore';
+import { useState, useEffect } from 'react';
+import { putInfo, getCheckNickname, getInfo, postPw, deleteSecession } from '@/lib/api/edit';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import AlertModal from '@/components/common/AlertModal';
+import useNicknameStore from '@/stores/useNicknameStore';
 
 export default function EditProfile() {
   const {
     control,
-    // register,
     handleSubmit,
     watch,
+    trigger,
+    reset,
     formState: { errors },
   } = useForm<FormValues>();
 
-  const { isOpen, openPasswordEdit } = usePasswordStore();
+  const { isOpen, openPasswordEdit, closePasswordEdit } = usePasswordStore();
+  const { isOpen: isModalOpen, openModal, closeModal } = useDeleteAccountModal();
   const [isNicknameChange, setIsNicknameChange] = useState(true);
+  const [nicknameChangeSuccess, setNicknameChangeSuccess] = useState(false);
+  const [infoData, setInfoData] = useState<UserInfoData | null>(null);
+  const [isPasswordVerified, setIsPasswordVerified] = useState(false);
+  const [updateTrigger, setUpdateTrigger] = useState(0);
+  const { setNickname } = useNicknameStore();
 
-  const onsubmit = (data: FormValues) => {
-    console.log(data);
-    alert('개인정보 수정이 완료되었습니다.');
+  const watchPassword = watch('password');
+  const watchNewPassword = watch('newPassword');
+  const watchPasswordConfirm = watch('passwordConfirm');
+
+  const router = useRouter();
+
+  const isFormValid = () => {
+    if (nicknameChangeSuccess) {
+      return true;
+    } else if (
+      isOpen &&
+      isPasswordVerified &&
+      watchNewPassword &&
+      watchPasswordConfirm &&
+      watchNewPassword === watchPasswordConfirm
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const onsubmit = async (data: FormValues) => {
+    let apiData: ChangeUserData = {
+      num: 0,
+      nickName: infoData?.nickName || '',
+      userPw: '',
+    };
+
+    if (nicknameChangeSuccess && !isOpen) {
+      // 닉네임만 변경 (케이스 1)
+      apiData = {
+        num: 1,
+        nickName: data.nickname,
+        userPw: '',
+      };
+    } else if (!nicknameChangeSuccess && isOpen && isPasswordVerified) {
+      // 비밀번호만 변경 (케이스 2)
+      apiData = {
+        num: 2,
+        nickName: infoData?.nickName || '',
+        userPw: data.newPassword,
+      };
+    } else if (nicknameChangeSuccess && isOpen && isPasswordVerified) {
+      // 닉네임, 비밀번호 모두 변경 (케이스 3)
+      apiData = {
+        num: 3,
+        nickName: data.nickname,
+        userPw: data.newPassword,
+      };
+    }
+
+    try {
+      await putInfo(apiData);
+      console.log('제출 데이터:', apiData);
+      setNickname(data.nickname);
+      alert('개인정보 수정이 완료되었습니다.');
+
+      resetFormState();
+
+      setUpdateTrigger((prev) => prev + 1);
+      closePasswordEdit();
+    } catch (error) {
+      console.error('개인정보 수정 중 에러 발생', error);
+      alert('개인정보 수정 중 오류가 발생했습니다. 다시 시도해주세요.');
+    }
+  };
+
+  const resetFormState = () => {
+    setIsNicknameChange(true);
+    setNicknameChangeSuccess(false);
+    setIsPasswordVerified(false);
+    reset({
+      nickname: infoData?.nickName || '',
+      password: '',
+      newPassword: '',
+      passwordConfirm: '',
+    });
   };
 
   const handleNicknameChange = () => {
     setIsNicknameChange(false);
+    setNicknameChangeSuccess(false);
+  };
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const result = await getInfo();
+        setInfoData(result);
+        setNickname(result?.nickName || '');
+
+        reset({
+          nickname: result?.nickName || '',
+          password: '',
+          newPassword: '',
+          passwordConfirm: '',
+        });
+      } catch (error) {
+        console.error('사용자 정보 가져오기 중 에러 발생', error);
+      }
+    };
+
+    fetchUserInfo();
+  }, [reset, updateTrigger, setNickname]);
+
+  const checkNickname = async () => {
+    const userNickname = watch('nickname');
+
+    if (userNickname === infoData?.nickName) {
+      alert('현재 닉네임과 동일합니다.');
+      return;
+    }
+
+    const isValid = await trigger('nickname');
+    if (!isValid) return;
+
+    try {
+      const result = await getCheckNickname(userNickname);
+      alert(`${result.message}. 저장하기 버튼을 눌러 저장하세요.`);
+      setNicknameChangeSuccess(true);
+      setIsNicknameChange(true);
+    } catch (error) {
+      console.error('닉네임 중복 확인 중 에러 발생', error);
+      if (axios.isAxiosError(error) && error.response) {
+        alert(error.response.data?.message || '닉네임 중복 확인 중 오류가 발생했습니다.');
+      } else {
+        alert('닉네임 중복 확인 중 오류가 발생했습니다.');
+      }
+    }
+  };
+
+  const checkPwMatch = async () => {
+    const userPw = watch('password');
+
+    const isValid = await trigger('password');
+    if (!isValid) return;
+
+    try {
+      const result = await postPw(userPw);
+      console.log(result);
+
+      if (result && result.isSuccess === false) {
+        alert('비밀번호가 일치하지 않습니다.');
+        return;
+      }
+
+      setIsPasswordVerified(true);
+      openPasswordEdit();
+    } catch (error) {
+      console.log('에러 상세 정보:', error);
+
+      if (axios.isAxiosError(error)) {
+        if (error.response && error.response.status === 404) {
+          alert('비밀번호가 일치하지 않습니다.');
+        } else {
+          alert('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        }
+      } else {
+        console.error('비밀번호 일치 확인 중 에러 발생', error);
+        alert('비밀번호 확인 중 오류가 발생했습니다.');
+      }
+    }
+  };
+
+  const deleteAccount = async () => {
+    try {
+      await deleteSecession();
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('userNickname');
+      router.push('/');
+    } catch (error) {
+      console.error('회원 탈퇴 중 에러 발생', error);
+    }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onsubmit)}
-      className="relative flex h-full flex-col gap-30 px-60 py-50"
-    >
-      <Input type="text" label="아이디" value="id123" disabled />
+    <>
+      <form
+        onSubmit={handleSubmit(onsubmit)}
+        className="relative flex h-full flex-col gap-30 px-60 py-50"
+      >
+        <Input type="text" label="아이디" value={infoData?.userId || ''} disabled />
 
-      <Input type="text" label="이메일" value="email@mail.com" disabled />
+        <Input type="text" label="이메일" value={infoData?.email || ''} disabled />
 
-      <div className="relative flex items-end gap-20">
-        <div className="w-full">
-          <Controller
-            name="nickname"
-            control={control}
-            rules={{
-              required: '닉네임을 입력해 주세요.',
-              validate: (value) => {
-                const isValid = /^[A-Za-z0-9가-힣]{2,8}$/.test(value);
-                const forbiddenWords = [
-                  'null',
-                  'undefined',
-                  'true',
-                  'false',
-                  'nan',
-                  'admin',
-                  'user',
-                  'fuck',
-                ];
-
-                if (!isValid) {
-                  return '닉네임은 2자 이상 8자 이하입니다. (특수문자 사용 불가)';
-                }
-                if (forbiddenWords.some((word) => value.toLowerCase().includes(word))) {
-                  return '닉네임에 유효하지 않은 단어를 사용할 수 없습니다.';
-                }
-                return true;
-              },
-            }}
-            render={({ field }) => (
-              <Input
-                {...field}
-                type="text"
-                label="닉네임"
-                placeholder={
-                  isNicknameChange
-                    ? '닉네임을 변경하려면 버튼을 눌러주세요.'
-                    : '닉네임을 입력해 주세요.'
-                }
-                error={!!errors.nickname}
-                disabled={isNicknameChange}
-              />
-            )}
-          />
-          {errors.nickname && (
-            <p className="absolute left-3 text-13 text-red-400">{errors.nickname.message}</p>
-          )}
-        </div>
-        {isNicknameChange ? (
-          <Button
-            label="변경"
-            className="h-50 w-140 text-14 font-bold"
-            onClick={handleNicknameChange}
-          />
-        ) : (
-          <Button label="중복확인" className="h-50 w-140 text-14 font-bold" variant="secondary" />
-        )}
-      </div>
-
-      <div className="relative flex items-end gap-20">
-        <div className="w-full">
-          <Controller
-            name="password"
-            control={control}
-            rules={{
-              required: '비밀번호를 입력해 주세요.',
-              pattern: {
-                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                message: '비밀번호가 영문, 숫자 포함 8자 이상이 되도록 해 주세요.',
-              },
-            }}
-            render={({ field }) => (
-              <Input
-                {...field}
-                type="password"
-                label="현재 비밀번호"
-                placeholder="현재 비밀번호를 입력해 주세요."
-                error={!!errors.password}
-              />
-            )}
-          />
-          {errors.password && (
-            <p className="absolute left-3 text-13 text-red-400">{errors.password.message}</p>
-          )}
-        </div>
-        <Button label="변경" className="h-50 w-140 text-14 font-bold" onClick={openPasswordEdit} />
-      </div>
-
-      {isOpen && (
-        <>
-          <div className="relative">
+        <div className="relative flex items-end gap-10 lg:gap-20">
+          <div className="w-full">
             <Controller
-              name="newPassword"
+              name="nickname"
               control={control}
+              defaultValue=""
               rules={{
-                required: '새 비밀번호를 입력해 주세요.',
+                required: '닉네임을 입력해 주세요.',
+                validate: (value) => {
+                  const isValid = /^[A-Za-z0-9가-힣]{2,8}$/.test(value);
+                  const forbiddenWords = [
+                    'null',
+                    'undefined',
+                    'true',
+                    'false',
+                    'nan',
+                    'admin',
+                    'user',
+                    'fuck',
+                  ];
+
+                  if (!isValid) {
+                    return '닉네임은 2자 이상 8자 이하입니다. (특수문자 사용 불가)';
+                  }
+                  if (forbiddenWords.some((word) => value.toLowerCase().includes(word))) {
+                    return '닉네임에 유효하지 않은 단어를 사용할 수 없습니다.';
+                  }
+                  return true;
+                },
+              }}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  type="text"
+                  label="닉네임"
+                  placeholder={
+                    isNicknameChange ? infoData?.nickName || '' : '새 닉네임을 입력해 주세요.'
+                  }
+                  error={!!errors.nickname}
+                  disabled={isNicknameChange}
+                />
+              )}
+            />
+            {errors.nickname && (
+              <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                {errors.nickname.message}
+              </p>
+            )}
+          </div>
+          {isNicknameChange ? (
+            <Button
+              label="변경"
+              className="h-40 w-90 text-12 font-bold lg:h-50 lg:w-140 lg:text-14"
+              onClick={handleNicknameChange}
+            />
+          ) : (
+            <Button
+              label="중복확인"
+              className="h-40 w-90 text-12 font-bold lg:h-50 lg:w-140 lg:text-14"
+              onClick={checkNickname}
+              variant={nicknameChangeSuccess ? 'disabled' : 'secondary'}
+            />
+          )}
+        </div>
+
+        <div className="relative flex items-end gap-10 lg:gap-20">
+          <div className="w-full">
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: isOpen ? '비밀번호를 입력해 주세요.' : false,
                 pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\W_]{8,}$/,
                   message: '비밀번호가 영문, 숫자 포함 8자 이상이 되도록 해 주세요.',
                 },
               }}
@@ -140,50 +298,112 @@ export default function EditProfile() {
                 <Input
                   {...field}
                   type="password"
-                  label="새 비밀번호"
-                  placeholder="새 비밀번호를 입력해 주세요."
-                  error={!!errors.newPassword}
+                  label="현재 비밀번호"
+                  placeholder="현재 비밀번호를 입력해 주세요."
+                  error={!!errors.password}
+                  disabled={isPasswordVerified}
                 />
               )}
             />
-            {errors.newPassword && (
-              <p className="absolute left-3 text-13 text-red-400">{errors.newPassword.message}</p>
-            )}
-          </div>
-
-          <div className="relative">
-            <Controller
-              name="passwordConfirm"
-              control={control}
-              rules={{
-                required: '비밀번호를 확인해 주세요.',
-                validate: (value) =>
-                  value === watch('newPassword') || '비밀번호가 일치하지 않습니다.',
-              }}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  type="password"
-                  label="비밀번호 확인"
-                  placeholder="비밀번호를 한 번 더 입력해 주세요."
-                  error={!!errors.passwordConfirm}
-                />
-              )}
-            />
-            {errors.passwordConfirm && (
-              <p className="absolute left-3 text-13 text-red-400">
-                {errors.passwordConfirm.message}
+            {errors.password && (
+              <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                {errors.password.message}
               </p>
             )}
           </div>
-        </>
-      )}
+          <Button
+            label={isPasswordVerified ? '확인됨' : '변경'}
+            className="h-40 w-90 text-12 font-bold lg:h-50 lg:w-140 lg:text-14"
+            onClick={checkPwMatch}
+            variant={isPasswordVerified ? 'disabled' : 'primary'}
+            disabled={isPasswordVerified}
+          />
+        </div>
 
-      <Button
-        label="저장하기"
-        type="submit"
-        className="absolute bottom-30 left-1/2 mt-20 h-50 w-140 -translate-x-1/2 transform text-20"
+        {isOpen && (
+          <>
+            <div className="relative">
+              <Controller
+                name="newPassword"
+                control={control}
+                defaultValue=""
+                rules={{
+                  required: '새 비밀번호를 입력해 주세요.',
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                    message: '비밀번호가 영문, 숫자 포함 8자 이상이 되도록 해 주세요.',
+                  },
+                  validate: (value) =>
+                    value !== watchPassword ||
+                    '현재 비밀번호와 같은 비밀번호로 변경할 수 없습니다.',
+                }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type="password"
+                    label="새 비밀번호"
+                    placeholder="새 비밀번호를 입력해 주세요."
+                    error={!!errors.newPassword}
+                  />
+                )}
+              />
+              {errors.newPassword && (
+                <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                  {errors.newPassword.message}
+                </p>
+              )}
+            </div>
+
+            <div className="relative">
+              <Controller
+                name="passwordConfirm"
+                control={control}
+                defaultValue=""
+                rules={{
+                  required: '비밀번호를 확인해 주세요.',
+                  validate: (value) =>
+                    value === watch('newPassword') || '비밀번호가 일치하지 않습니다.',
+                }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type="password"
+                    label="비밀번호 확인"
+                    placeholder="비밀번호를 한 번 더 입력해 주세요."
+                    error={!!errors.passwordConfirm}
+                  />
+                )}
+              />
+              {errors.passwordConfirm && (
+                <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                  {errors.passwordConfirm.message}
+                </p>
+              )}
+            </div>
+          </>
+        )}
+
+        <Button
+          label="저장하기"
+          type="submit"
+          className="absolute bottom-30 left-1/2 mt-20 h-45 w-100 -translate-x-1/2 transform text-16 lg:h-50 lg:w-140 lg:text-20"
+          variant={isFormValid() ? 'primary' : 'disabled'}
+          disabled={!isFormValid()}
+        />
+        <div
+          className="absolute bottom-7 right-10 cursor-pointer text-12 text-gray-400"
+          onClick={openModal}
+        >
+          회원탈퇴
+        </div>
+      </form>
+      <AlertModal
+        message={'정말 탈퇴하실 건가요?'}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onClick={deleteAccount}
+        okCancle
       />
-    </form>
+    </>
   );
 }

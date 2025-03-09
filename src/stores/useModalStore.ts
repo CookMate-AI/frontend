@@ -12,6 +12,12 @@ export const useAlertIdModalStore = create<ModalStore>((set) => ({
   closeModal: () => set({ isOpen: false }),
 }));
 
+export const useAlertIdEmailModalStore = create<ModalStore>((set) => ({
+  isOpen: false,
+  openModal: () => set({ isOpen: true }),
+  closeModal: () => set({ isOpen: false }),
+}));
+
 export const useAlertPasswordModalStore = create<ModalStore>((set) => ({
   isOpen: false,
   openModal: () => set({ isOpen: true }),
@@ -31,6 +37,12 @@ export const useFindPasswordModalStore = create<ModalStore>((set) => ({
 }));
 
 export const useRecipeModal = create<ModalStore>((set) => ({
+  isOpen: false,
+  openModal: () => set({ isOpen: true }),
+  closeModal: () => set({ isOpen: false }),
+}));
+
+export const useDeleteAccountModal = create<ModalStore>((set) => ({
   isOpen: false,
   openModal: () => set({ isOpen: true }),
   closeModal: () => set({ isOpen: false }),

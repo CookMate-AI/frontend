@@ -22,7 +22,7 @@ export default function Input({
   value,
 }: InputProps) {
   const baseStyles = classNames(
-    'h-55 w-full rounded-12 border px-16 text-gray-500 outline-none focus:border-gray-300',
+    'h-55 w-full rounded-12 border text-12 lg:text-14 px-16 text-gray-500 outline-none focus:border-gray-300',
     {
       'border-gray-200 bg-gray-100': !error,
       'bg-error border-error focus:border-red-200': error,
@@ -31,11 +31,9 @@ export default function Input({
     className,
   );
 
-  console.log(baseStyles);
-
   return (
     <div className="w-full">
-      <label className="mb-4 ml-4 block text-sm text-gray-700">{label}</label>
+      <label className="mb-4 ml-4 block text-12 lg:text-15 text-gray-700">{label}</label>
       <input
         type={type}
         className={baseStyles}

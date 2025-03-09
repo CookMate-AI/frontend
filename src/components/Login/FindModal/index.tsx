@@ -4,7 +4,13 @@ import Image from 'next/image';
 import { Controller, useForm } from 'react-hook-form';
 import { FormValues } from '@/types/findModal';
 import AlertModal from '@/components/common/AlertModal';
-import { useAlertIdModalStore, useAlertPasswordModalStore } from '@/stores/useModalStore';
+import {
+  useAlertIdEmailModalStore,
+  useAlertIdModalStore,
+  useAlertPasswordModalStore,
+} from '@/stores/useModalStore';
+import { postFindIdSendEmail, postFindIdCertification, postFindPw } from '@/lib/api/login';
+import { useState } from 'react';
 
 interface FindModalProps {
   type: 'id' | 'password';
@@ -16,20 +22,138 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
   const {
     control,
     handleSubmit,
+    watch,
+    reset,
     formState: { errors },
   } = useForm<FormValues>();
+
+  const [findIdMessage, setFindIdMessage] = useState<string>('');
+  const [findPwMessage, setFindPwMessage] = useState<string>('');
+  const [closeFindIdSingle, setCloseFindIdSingle] = useState<boolean>(false);
+  const [closeFindPWSingle, setCloseFindPWSingle] = useState<boolean>(false);
+
+  const onCheckEmail = async () => {
+    const userEmail = watch('email');
+
+    if (!userEmail) {
+      alert('이메일을 입력해 주세요.');
+      return;
+    }
+
+    openCheckEmailModal();
+
+    try {
+      const result = await postFindIdSendEmail(userEmail);
+      if (result) {
+        console.log(result.message);
+      }
+    } catch (error) {
+      console.error('인증번호 전송 중 에러 발생', error);
+    }
+  };
+
+  const onCheckEmailCertification = async () => {
+    const userEmail = watch('email');
+    const emailConfirm = watch('emailConfirm');
+
+    if (!emailConfirm) {
+      alert('인증번호를 입력해 주세요.');
+      return;
+    }
+
+    openIdModal();
+
+    try {
+      const userData = {
+        email: userEmail,
+        code: emailConfirm,
+      };
+      const result = await postFindIdCertification(userData);
+      console.log(result);
+      if (result.ID) {
+        const findId = result.ID;
+        setFindIdMessage(`회원님의 아이디는 ${findId} 입니다.`);
+        setCloseFindIdSingle(false);
+      } else if (result.checkNum === 0) {
+        setCloseFindIdSingle(true);
+        setFindIdMessage('인증번호가 만료되었습니다.');
+      } else if (result.checkNum === 1) {
+        setCloseFindIdSingle(true);
+        setFindIdMessage('인증번호가 일치하지 않습니다.');
+      }
+    } catch (error) {
+      console.error('인증번호 확인 중 에러 발생', error);
+    }
+  };
+
+  const onFindPw = async () => {
+    const userId = watch('id');
+    const userEmail = watch('email');
+
+    if (!userId) {
+      alert('아이디를 입력해 주세요.');
+      return;
+    }
+
+    if (!userEmail) {
+      alert('이메일을 입력해 주세요.');
+      return;
+    }
+
+    try {
+      const userData = {
+        userId: userId,
+        email: userEmail,
+      };
+      const result = await postFindPw(userData);
+      if (result.status === 200) {
+        setFindPwMessage(
+          '해당 이메일로 변경된 비밀번호가 발송되었습니다. 반드시 비밀번호를 변경해 주세요.',
+        );
+        setCloseFindPWSingle(false);
+      } else if (result.status === 202) {
+        setFindPwMessage('아이디와 이메일이 일치하지 않습니다.');
+        setCloseFindPWSingle(true);
+      }
+    } catch (error) {
+      console.error('비밀번호 찾기 중 에러 발생', error);
+    }
+  };
+
+  const {
+    isOpen: isCheckEmailOpen,
+    openModal: openCheckEmailModal,
+    closeModal: closeCheckEmailModal,
+  } = useAlertIdEmailModalStore();
 
   const {
     isOpen: isIdOpen,
     openModal: openIdModal,
-    closeModal: closeIdModal,
+    closeModal: closeIdModalOriginal,
   } = useAlertIdModalStore();
+
+  const closeIdModal = () => {
+    closeIdModalOriginal();
+    if (!closeFindIdSingle) {
+      reset({
+        email: '',
+        emailConfirm: '',
+      });
+    }
+  };
 
   const {
     isOpen: isPwOpen,
     openModal: openPwModal,
-    closeModal: closePwModal,
+    closeModal: closePwModalOriginal,
   } = useAlertPasswordModalStore();
+
+  const closePwModal = () => {
+    closePwModalOriginal();
+    if (!closeFindPWSingle) {
+      reset({ id: '', email: '' });
+    }
+  };
 
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -38,13 +162,12 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
 
   const onsubmitId = (data: FormValues) => {
     console.log(data);
-    openIdModal();
-  };
+  }; // 수정필요
 
   const onsubmitPassword = (data: FormValues) => {
     console.log(data);
     openPwModal();
-  };
+  }; // 수정필요
 
   if (!isModalOpen) return null;
 
@@ -54,7 +177,7 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
       onClick={handleClose}
     >
       <div
-        className="relative h-536 w-632 rounded-24 border-2 border-orange-400 bg-beige-200 p-24 shadow-lg"
+        className="relative h-436 w-400 rounded-24 border-2 border-orange-400 bg-beige-200 p-24 shadow-lg lg:h-536 lg:w-632"
         onClick={(e) => e.stopPropagation()}
       >
         <Image
@@ -65,20 +188,21 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
           className="absolute right-24 cursor-pointer"
           onClick={handleClose}
         />
-        <div className="flex items-center justify-center gap-8 text-20 font-bold">
+        <div className="flex items-center justify-center gap-8 text-16 font-bold lg:text-20">
           {type === 'id' ? <p>아이디</p> : <p>비밀번호</p>}
           <p>찾기</p>
         </div>
         {type === 'id' ? (
           <form
             onSubmit={handleSubmit(onsubmitId)}
-            className="mt-30 flex h-420 w-full flex-col items-center justify-center gap-30 rounded-20 bg-white p-30"
+            className="mt-30 flex h-320 w-full flex-col items-center justify-center gap-30 rounded-20 bg-white p-30 lg:h-420"
           >
             <div className="relative flex w-full items-end gap-16">
               <div className="w-full">
                 <Controller
                   name="email"
                   control={control}
+                  defaultValue=""
                   rules={{
                     required: '이메일을 입력해 주세요.',
                     pattern: {
@@ -97,13 +221,16 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
                   )}
                 />
                 {errors.email && (
-                  <p className="absolute left-3 text-13 text-red-400">{errors.email.message}</p>
+                  <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
               <Button
                 label="인증번호 전송"
                 variant="outlinePrimary"
-                className="h-45 w-105 flex-shrink-0 text-12 font-bold"
+                className="h-40 w-80 flex-shrink-0 text-12 font-bold lg:w-105"
+                onClick={onCheckEmail}
               />
             </div>
 
@@ -112,6 +239,7 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
                 <Controller
                   name="emailConfirm"
                   control={control}
+                  defaultValue=""
                   rules={{ required: '인증번호를 입력해 주세요.' }}
                   render={({ field }) => (
                     <Input
@@ -124,7 +252,7 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
                   )}
                 />
                 {errors.emailConfirm && (
-                  <p className="absolute left-3 text-13 text-red-400">
+                  <p className="absolute left-3 text-11 text-red-400 lg:text-13">
                     {errors.emailConfirm.message}
                   </p>
                 )}
@@ -132,21 +260,21 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
               <Button
                 label="인증하기"
                 variant="outlinePrimary"
-                className="h-45 w-105 flex-shrink-0 text-12 font-bold"
+                className="h-40 w-80 flex-shrink-0 text-12 font-bold lg:w-105"
+                onClick={onCheckEmailCertification}
               />
             </div>
-
-            <Button label="찾기" type="submit" className="h-40 w-120" />
           </form>
         ) : (
           <form
             onSubmit={handleSubmit(onsubmitPassword)}
-            className="mt-30 flex h-420 w-full flex-col items-center justify-center gap-30 rounded-20 bg-white p-24"
+            className="mt-30 flex h-320 w-full flex-col items-center justify-center gap-30 rounded-20 bg-white p-24 lg:h-420"
           >
             <div className="relative w-full">
               <Controller
                 name="id"
                 control={control}
+                defaultValue=""
                 rules={{
                   required: '아이디를 입력해 주세요.',
                   pattern: {
@@ -166,7 +294,9 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
                 )}
               />
               {errors.id && (
-                <p className="absolute left-3 text-13 text-red-400">{errors.id.message}</p>
+                <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                  {errors.id.message}
+                </p>
               )}
             </div>
 
@@ -175,6 +305,7 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
                 <Controller
                   name="email"
                   control={control}
+                  defaultValue=""
                   rules={{
                     required: '이메일을 입력해 주세요.',
                     pattern: {
@@ -193,20 +324,39 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
                   )}
                 />
                 {errors.email && (
-                  <p className="absolute left-3 text-13 text-red-400">{errors.email.message}</p>
+                  <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
             </div>
 
-            <Button label="찾기" type="submit" className="h-40 w-120" />
+            <Button
+              label="찾기"
+              type="submit"
+              className="h-35 w-80 text-14 lg:h-40 lg:w-120 lg:text-16"
+              onClick={onFindPw}
+            />
           </form>
         )}
       </div>
-      <AlertModal message="아이디는 000000입니다." isOpen={isIdOpen} onClose={closeIdModal} />
       <AlertModal
-        message="해당 이메일로 비밀번호를 전송했습니다."
+        message={'해당 이메일로 인증번호가 전송되었습니다.'}
+        isOpen={isCheckEmailOpen}
+        onClose={closeCheckEmailModal}
+        unitClose
+      />
+      <AlertModal
+        message={findIdMessage}
+        isOpen={isIdOpen}
+        onClose={closeIdModal}
+        unitClose={closeFindIdSingle}
+      />
+      <AlertModal
+        message={findPwMessage}
         isOpen={isPwOpen}
         onClose={closePwModal}
+        unitClose={closeFindPWSingle}
       />
     </div>
   );
