@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import useDropdownStore from '@/stores/useDropdownStore';
-import useNicknameStore from '@/stores/useNicknameStore';
 import { postLogout } from '@/lib/api/logout';
 
 export default function Dropdown() {
@@ -9,21 +8,10 @@ export default function Dropdown() {
   const ref = useRef<HTMLDivElement>(null);
   const { isOpen, closeDropdown } = useDropdownStore();
   const [token, setToken] = useState<string | null>(null);
-  const { setNickname, clearNickname } = useNicknameStore();
 
   useEffect(() => {
-    setToken(localStorage.getItem('token'));
-    const storedNickname = localStorage.getItem('userNickname');
-    if (storedNickname) {
-      try {
-        const decoded = decodeURIComponent(escape(atob(storedNickname)));
-        setNickname(decoded);
-      } catch (error) {
-        console.error('닉네임 디코딩 중 에러 발생:', error);
-        setNickname(storedNickname);
-      }
-    }
-  }, [setNickname]);
+    setToken(localStorage.getItem('accessToken'));
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -46,9 +34,10 @@ export default function Dropdown() {
     } catch (error) {
       console.error('로그아웃 중 에러 발생', error);
     } finally {
-      localStorage.removeItem('token');
+      localStorage.removeItem('accessToken');
       localStorage.removeItem('userNickname');
-      clearNickname();
+      setToken(null);
+      closeDropdown();
       router.push('/');
     }
   };

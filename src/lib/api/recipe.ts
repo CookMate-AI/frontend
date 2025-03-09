@@ -1,11 +1,6 @@
 import { api } from './axios';
 import { AxiosError } from 'axios';
-
-interface RecipeData {
-  food: string;
-  content: string;
-  category: number;
-}
+import { RecipeSaveData } from '@/types/recipe';
 
 export const postMenu = async (ingredients: string) => {
   try {
@@ -21,7 +16,7 @@ export const postMenu = async (ingredients: string) => {
 
 export const postRecommend = async (foodName: string) => {
   try {
-    const res = await api.post(`/recipe/recommend`, {food: foodName});
+    const res = await api.post(`/recipe/recommend`, { food: foodName });
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {
@@ -31,7 +26,7 @@ export const postRecommend = async (foodName: string) => {
   }
 };
 
-export const postSave = async (recipeData: RecipeData) => {
+export const postSave = async (recipeData: RecipeSaveData) => {
   try {
     const res = await api.post(`/recipe/save`, recipeData);
     return res.data;
@@ -45,7 +40,9 @@ export const postSave = async (recipeData: RecipeData) => {
 
 export const deleteRecipe = async (recipeId: number) => {
   try {
-    const res = await api.delete(`/recipe/${recipeId}`);
+    const res = await api.delete('/recipe/my', {
+      data: { recipeId }
+    });
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {

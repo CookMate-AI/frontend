@@ -229,7 +229,7 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
               <Button
                 label="인증번호 전송"
                 variant="outlinePrimary"
-                className="h-45 w-80 flex-shrink-0 text-12 font-bold lg:w-105"
+                className="h-40 w-80 flex-shrink-0 text-12 font-bold lg:w-105"
                 onClick={onCheckEmail}
               />
             </div>
@@ -260,7 +260,7 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
               <Button
                 label="인증하기"
                 variant="outlinePrimary"
-                className="h-45 w-80 flex-shrink-0 text-12 font-bold lg:w-105"
+                className="h-40 w-80 flex-shrink-0 text-12 font-bold lg:w-105"
                 onClick={onCheckEmailCertification}
               />
             </div>
@@ -331,7 +331,12 @@ export default function FindModal({ type, isModalOpen, onClose }: FindModalProps
               </div>
             </div>
 
-            <Button label="찾기" type="submit" className="w-80 h-35 lg:h-40 lg:w-120 text-14 lg:text-16" onClick={onFindPw} />
+            <Button
+              label="찾기"
+              type="submit"
+              className="h-35 w-80 text-14 lg:h-40 lg:w-120 lg:text-16"
+              onClick={onFindPw}
+            />
           </form>
         )}
       </div>
