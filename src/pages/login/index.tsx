@@ -41,6 +41,13 @@ export default function Login() {
       router.push('/');
     } catch (error) {
       console.error('로그인 중 에러 발생', error);
+      if (error === 'Request failed with status code 404') {
+        alert('가입된 사용자가 아닙니다.');
+      } else if (error === 'Request failed with status code 401') {
+        alert('비밀번호가 일치하지 않습니다.');
+      } else {
+        alert('로그인 중 오류가 발생했습니다. 다시 시도해주세요.');
+      }
     }
   };
 
@@ -50,7 +57,7 @@ export default function Login() {
 
   return (
     <div className="flex justify-center pb-20 pt-60">
-      <div className="relative h-550 w-400 rounded-24 bg-white px-30 py-40 lg:py-60 shadow-md lg:h-640 lg:w-650">
+      <div className="relative h-550 w-400 rounded-24 bg-white px-30 py-40 shadow-md lg:h-640 lg:w-650 lg:py-60">
         <h1 className="text-center text-20 font-bold text-gray-800 lg:text-30">로그인</h1>
         <form onSubmit={handleSubmit(onsubmit)} className="mt-70 flex flex-col gap-30">
           <div className="relative">
@@ -104,7 +111,9 @@ export default function Login() {
               )}
             />
             {errors.password && (
-              <p className="absolute left-3 text-11 text-red-400 lg:text-13">{errors.password.message}</p>
+              <p className="absolute left-3 text-11 text-red-400 lg:text-13">
+                {errors.password.message}
+              </p>
             )}
           </div>
 
