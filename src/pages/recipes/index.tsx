@@ -86,42 +86,50 @@ export default function Recipes() {
           </form>
         </div>
         <div className="h-710 overflow-y-auto p-16 scrollbar-hide">
-          {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`mb-8 w-370 rounded-lg p-16 lg:w-450 ${
-                message.type === 'user'
-                  ? 'ml-auto max-w-md bg-gray-100'
-                  : message.type === 'error'
-                    ? 'max-w-md bg-red-50'
-                    : 'max-w-md bg-orange-100'
-              }`}
-            >
-              {message.type === 'error' ? (
-                <div className="flex flex-col gap-2 text-14 text-red-500 lg:text-16">
-                  {message.content.map((line, i) => (
-                    <p key={i} className="text-center">
-                      {line}
-                    </p>
-                  ))}
-                </div>
-              ) : (
-                <p
-                  className={`h-60 text-14 lg:text-16 ${message.type === 'bot' ? 'rounded-t-lg bg-white p-14' : ''}`}
+          {messages.length > 0 ? (
+            <>
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`mb-8 w-370 rounded-lg p-16 lg:w-450 ${
+                    message.type === 'user'
+                      ? 'ml-auto max-w-md bg-gray-100'
+                      : message.type === 'error'
+                        ? 'max-w-md bg-red-50'
+                        : 'max-w-md bg-orange-100'
+                  }`}
                 >
-                  {message.content}
-                </p>
-              )}
-              {message.type === 'bot' && message.recipes && (
-                <div className="flex gap-12 rounded-b-lg bg-white p-12 justify-center">
-                  {message.recipes.map((recipe, index) => (
-                    <Recipe key={`${recipe}-${index}`} foodName={recipe} index={index} />
-                  ))}
+                  {message.type === 'error' ? (
+                    <div className="flex flex-col gap-2 text-14 text-red-500 lg:text-16">
+                      {message.content.map((line, i) => (
+                        <p key={i} className="text-center">
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p
+                      className={`h-60 text-14 lg:text-16 ${message.type === 'bot' ? 'rounded-t-lg bg-white p-14' : ''}`}
+                    >
+                      {message.content}
+                    </p>
+                  )}
+                  {message.type === 'bot' && message.recipes && (
+                    <div className="flex justify-center gap-12 rounded-b-lg bg-white p-12">
+                      {message.recipes.map((recipe, index) => (
+                        <Recipe key={`${recipe}-${index}`} foodName={recipe} index={index} />
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
+              ))}
+              <div ref={messagesEndRef} />
+            </>
+          ) : (
+            <div className="flex h-full items-center justify-center">
+              <p className="text-gray-400">재료를 입력하면 추천 레시피가 표시됩니다.</p>
             </div>
-          ))}
-          <div ref={messagesEndRef} />
+          )}
         </div>
       </div>
     </div>

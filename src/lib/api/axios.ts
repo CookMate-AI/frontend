@@ -110,6 +110,8 @@ api.interceptors.response.use(
         processQueue(refreshError);
         isRefreshing = false;
 
+        alert('토큰이 만료되었습니다. 다시 로그인해 주세요.')
+
         // 로그인 페이지로 리다이렉트 (필요시 활성화)
         window.location.href = '/login';
 
