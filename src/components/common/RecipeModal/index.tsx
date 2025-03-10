@@ -5,6 +5,8 @@ import Button from '../Button';
 import { RecipeData, RecipeSaveData } from '@/types/recipe';
 import { postSave, deleteRecipe } from '@/lib/api/recipe';
 import { useRouter } from 'next/router';
+import { useToastStore } from '@/stores/useToastStore';
+import ToastContainer from '../Toast/ToastContainer';
 
 interface RecipeModalProps {
   recipeData: RecipeData | null;
@@ -30,6 +32,7 @@ export default function RecipeModal({
   const [saveSuccess, setSaveSuccess] = useState(false);
   const router = useRouter();
   const isMyPage = router.pathname === '/mypage' || router.pathname.startsWith('/mypage/');
+  const { showToast } = useToastStore();
 
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -50,6 +53,7 @@ export default function RecipeModal({
 
         await postSave(saveData);
         setSaveSuccess(true);
+        showToast('저장이 완료되었습니다.')
       }
     } catch (error) {
       console.error('레시피 저장 중 에러 발생:', error);
@@ -125,6 +129,7 @@ export default function RecipeModal({
           />
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
