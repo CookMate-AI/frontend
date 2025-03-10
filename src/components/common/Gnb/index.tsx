@@ -36,8 +36,11 @@ export default function Gnb() {
         <div>Cook Mate</div>
         {isHidePushRecipes && (
           <div
-            onClick={handleMove}
-            className="ml-20 cursor-pointer text-13 text-navy lg:ml-30 lg:text-16"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleMove();
+            }}
+            className="ml-20 h-full text-13 text-navy lg:ml-30 lg:text-16"
           >
             이용하기
           </div>
