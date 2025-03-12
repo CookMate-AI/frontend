@@ -1,4 +1,5 @@
 import axios from 'axios';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 type FailedRequest = {
   resolve: (token: string | null) => void;
@@ -6,7 +7,8 @@ type FailedRequest = {
 };
 
 export const api = axios.create({
-  baseURL: '/api',
+  // baseURL: '/api',
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
     'ngrok-skip-browser-warning': true,
