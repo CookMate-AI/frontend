@@ -79,7 +79,7 @@ api.interceptors.response.use(
       try {
         // 토큰 갱신 요청
         const response = await axios.post(
-          '/api/reissue',
+          `${API_URL}/reissue`,
           {},
           {
             withCredentials: true, // 쿠키 전송을 위해 필수
