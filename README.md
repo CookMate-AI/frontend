@@ -52,6 +52,10 @@
 
 <img alt="googlegemini" src ="https://img.shields.io/badge/googlegemini-8E75B2.svg?&style=for-the-badge&logo=googlegemini&logoColor=white"/>
 
+<img alt="junit5" src ="https://img.shields.io/badge/junit5-25A162.svg?&style=for-the-badge&logo=junit5&logoColor=white"/>
+
+<img alt="ngrok" src ="https://img.shields.io/badge/ngrok-1F1E37.svg?&style=for-the-badge&logo=ngrok&logoColor=white"/>
+
 ### Version Control
 ![Git](https://img.shields.io/badge/Git-f05032.svg?&style=for-the-badge&logo=Git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717.svg?&style=for-the-badge&logo=GitHub&logoColor=white)
