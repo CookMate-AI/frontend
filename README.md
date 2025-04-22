@@ -60,10 +60,11 @@
 
 </br>
 
-## ⚙️ 
+## 🖥️ 주요 기능
+### 메인페이지![스크린샷 2025-04-22 오후 2 17 34](https://github.com/user-attachments/assets/d14eee21-b214-4b76-897c-936fcb173cf5)
+### 레시피 검색페이지![스크린샷 2025-04-22 오후 2 19 26](https://github.com/user-attachments/assets/b8d31416-639f-4fff-aabb-a7e907a26bf4)
+### 마이페이지 - 나의 레시피![스크린샷 2025-04-22 오후 2 26 15](https://github.com/user-attachments/assets/9f8e152a-29e2-4d61-924c-714658f3483f)
+### 마이페이지 - 개인정보 수정![스크린샷 2025-04-22 오후 2 28 32](https://github.com/user-attachments/assets/9d4b0e16-17d1-4cc7-9daa-7917f06e5cab)
 
 
-</br>
-
-## 🖥️ 시연 영상
 
