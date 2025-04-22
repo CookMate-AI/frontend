@@ -20,8 +20,8 @@
 ## 🧑‍🤝‍🧑 팀원
 | **역할**        | **이름**      |**email**|
 |-----------------|---------------|---------------|
-| FE 개발자   | 박준성      |[@fe](juncastle97@gmail.com)|
-| BE 개발자   | 박재현      |[@be](mark971008.gmail.com)|
+| FE 개발자   | 박준성      |juncastle97@gmail.com|
+| BE 개발자   | 박재현      |mark971008.gmail.com|
 
 <br/>
 
