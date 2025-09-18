@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import FindModal from '@/components/Login/FindModal';
 import { useFindIdModalStore, useFindPasswordModalStore } from '@/stores/useModalStore';
 import { postLogin } from '@/lib/api/login';
+import useAuthStore from '@/stores/authStore';
 
 export default function Login() {
   const {
@@ -28,6 +29,8 @@ export default function Login() {
     openModal: openPwModal,
   } = useFindPasswordModalStore();
 
+  const { login } = useAuthStore();
+
   const onsubmit = async (data: FormValues) => {
     try {
       const loginData = {
@@ -37,6 +40,7 @@ export default function Login() {
       const result = await postLogin(loginData);
       if (result) {
         alert(result.message);
+        login(result.user, result.token);
       }
       router.push('/');
     } catch (error) {
