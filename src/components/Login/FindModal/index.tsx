@@ -1,16 +1,17 @@
+import Image from 'next/image';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+
+import AlertModal from '@/components/common/AlertModal';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
-import Image from 'next/image';
-import { Controller, useForm } from 'react-hook-form';
-import { FormValues } from '@/types/findModal';
-import AlertModal from '@/components/common/AlertModal';
+import { postFindIdCertification, postFindIdSendEmail, postFindPw } from '@/lib/api/login';
 import {
   useAlertIdEmailModalStore,
   useAlertIdModalStore,
   useAlertPasswordModalStore,
 } from '@/stores/useModalStore';
-import { postFindIdSendEmail, postFindIdCertification, postFindPw } from '@/lib/api/login';
-import { useState } from 'react';
+import { FormValues } from '@/types/findModal';
 
 interface FindModalProps {
   type: 'id' | 'password';

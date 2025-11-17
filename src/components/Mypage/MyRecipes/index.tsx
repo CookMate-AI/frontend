@@ -1,9 +1,10 @@
-import Recipe from '@/components/common/Recipe';
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
+
+import Button from '@/components/common/Button';
+import Recipe from '@/components/common/Recipe';
 import { getInfo } from '@/lib/api/recipe';
 import { RecipeInfoData } from '@/types/recipe';
-import { useRouter } from 'next/router';
-import Button from '@/components/common/Button';
 
 export default function MyRecipes() {
   const [infoData, setInfoData] = useState<RecipeInfoData[]>([]);

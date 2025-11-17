@@ -1,5 +1,6 @@
-import { api } from './axios';
 import { AxiosError } from 'axios';
+
+import { api } from './axios';
 
 export const postLogout = async () => {
   try {
