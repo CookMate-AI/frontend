@@ -3,9 +3,9 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { useEffect } from 'react';
 
-import Footer from '@/components/common/Footer';
-import Gnb from '@/components/common/Gnb';
-import useAuthStore from '@/stores/authStore';
+import Footer from '@/components/layout/Footer';
+import Gnb from '@/components/layout/Gnb';
+import useAuthStore from '@/stores/auth/useAuthStore';
 
 export default function App({ Component, pageProps }: AppProps) {
   const initAuth = useAuthStore((state) => state.initAuth);

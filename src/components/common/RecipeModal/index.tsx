@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 import { deleteRecipe,postSave } from '@/lib/api/recipe';
-import { useToastStore } from '@/stores/useToastStore';
+import { useToastStore } from '@/stores/ui/useToastStore';
 import { RecipeData, RecipeSaveData } from '@/types/recipe';
 
-import Button from '../Button';
-import ToastContainer from '../Toast/ToastContainer';
+import ToastContainer from '../../feedback/Toast/ToastContainer';
+import Button from '../../ui/Button';
 import RecipeViewer from './RecipeViewer';
 
 interface RecipeModalProps {

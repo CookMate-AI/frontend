@@ -3,13 +3,13 @@ import { useRouter } from 'next/router';
 import { useEffect,useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import AlertModal from '@/components/common/AlertModal';
-import Button from '@/components/common/Button';
-import Input from '@/components/common/Input';
+import AlertModal from '@/components/ui/AlertModal';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
 import { deleteSecession,getCheckNickname, getInfo, postPw, putInfo } from '@/lib/api/edit';
-import { useDeleteAccountModal } from '@/stores/useModalStore';
-import useNicknameStore from '@/stores/useNicknameStore';
-import usePasswordStore from '@/stores/usePasswordStore';
+import usePasswordStore from '@/stores/auth/usePasswordStore';
+import useNicknameStore from '@/stores/nickname/useNicknameStore';
+import { useDeleteAccountModal } from '@/stores/ui/useModalStore';
 import { ChangeUserData,FormValues, UserInfoData } from '@/types/editProfile';
 
 export default function EditProfile() {

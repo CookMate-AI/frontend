@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import Button from '@/components/common/Button';
+import Button from '@/components/ui/Button';
 
 export default function Index() {
   const router = useRouter();

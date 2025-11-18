@@ -1,4 +1,4 @@
-import { useFindIdModalStore, useFindPasswordModalStore } from '@/stores/useModalStore';
+import { useFindIdModalStore, useFindPasswordModalStore } from '@/stores/ui/useModalStore';
 
 import Button from '../Button';
 

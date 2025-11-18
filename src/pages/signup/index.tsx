@@ -1,7 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 
-import Button from '@/components/common/Button';
-import Input from '@/components/common/Input';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
 import {
   getCheckUserId,
   postCheckEmailCertification,

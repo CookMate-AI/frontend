@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import EditProfile from '@/components/Mypage/EditProfile';
 import MyRecipes from '@/components/Mypage/MyRecipes';
-import useNicknameStore from '@/stores/useNicknameStore';
+import useNicknameStore from '@/stores/nickname/useNicknameStore';
 
 export default function Mypage() {
   const [activeTab, setActiveTab] = useState('recipes');

@@ -1,4 +1,4 @@
-import { useToastStore } from '@/stores/useToastStore';
+import { useToastStore } from '@/stores/ui/useToastStore';
 
 import Toast from '..';
 

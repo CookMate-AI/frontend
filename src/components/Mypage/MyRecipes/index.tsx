@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 
-import Button from '@/components/common/Button';
 import Recipe from '@/components/common/Recipe';
+import Button from '@/components/ui/Button';
 import { getInfo } from '@/lib/api/recipe';
 import { RecipeInfoData } from '@/types/recipe';
 
