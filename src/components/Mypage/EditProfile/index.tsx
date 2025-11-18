@@ -1,15 +1,16 @@
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useEffect,useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+
+import AlertModal from '@/components/common/AlertModal';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
-import { FormValues, UserInfoData, ChangeUserData } from '@/types/editProfile';
-import { Controller, useForm } from 'react-hook-form';
-import usePasswordStore from '@/stores/usePasswordStore';
+import { deleteSecession,getCheckNickname, getInfo, postPw, putInfo } from '@/lib/api/edit';
 import { useDeleteAccountModal } from '@/stores/useModalStore';
-import { useState, useEffect } from 'react';
-import { putInfo, getCheckNickname, getInfo, postPw, deleteSecession } from '@/lib/api/edit';
-import { useRouter } from 'next/router';
-import axios from 'axios';
-import AlertModal from '@/components/common/AlertModal';
 import useNicknameStore from '@/stores/useNicknameStore';
+import usePasswordStore from '@/stores/usePasswordStore';
+import { ChangeUserData,FormValues, UserInfoData } from '@/types/editProfile';
 
 export default function EditProfile() {
   const {

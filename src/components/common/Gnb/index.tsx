@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+
 import useDropdownStore from '@/stores/useDropdownStore';
+
 import Dropdown from './Dropdown';
 
 export default function Gnb() {

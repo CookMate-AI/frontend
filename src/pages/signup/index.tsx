@@ -1,13 +1,14 @@
+import { Controller, useForm } from 'react-hook-form';
+
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
-import { Controller, useForm } from 'react-hook-form';
-import { FormValues } from '@/types/signup';
 import {
   getCheckUserId,
-  postCheckEmailSendEmail,
   postCheckEmailCertification,
+  postCheckEmailSendEmail,
   postSignup,
 } from '@/lib/api/signup';
+import { FormValues } from '@/types/signup';
 
 export default function Signup() {
   const {

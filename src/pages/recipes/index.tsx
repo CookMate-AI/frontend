@@ -1,8 +1,9 @@
 import Image from 'next/image';
-import { useState, FormEvent, useEffect, useRef } from 'react';
-import { UserMessage, BotMessage, ErrorMessage } from '@/types/messages';
+import { FormEvent, useEffect, useRef,useState } from 'react';
+
 import Recipe from '@/components/common/Recipe';
 import { postMenu } from '@/lib/api/recipe';
+import { BotMessage, ErrorMessage,UserMessage } from '@/types/messages';
 
 type Message = UserMessage | BotMessage | ErrorMessage;
 

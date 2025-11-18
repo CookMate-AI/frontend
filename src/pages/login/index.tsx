@@ -1,12 +1,13 @@
+import { useRouter } from 'next/router';
+import { Controller, useForm } from 'react-hook-form';
+
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
-import { Controller, useForm } from 'react-hook-form';
-import { FormValues } from '@/types/login';
-import { useRouter } from 'next/router';
 import FindModal from '@/components/Login/FindModal';
-import { useFindIdModalStore, useFindPasswordModalStore } from '@/stores/useModalStore';
 import { postLogin } from '@/lib/api/login';
 import useAuthStore from '@/stores/authStore';
+import { useFindIdModalStore, useFindPasswordModalStore } from '@/stores/useModalStore';
+import { FormValues } from '@/types/login';
 
 export default function Login() {
   const {

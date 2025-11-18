@@ -1,10 +1,12 @@
 import Image from 'next/image';
-import { RecipeProps } from '@/types/recipe';
-import RecipeModal from '../RecipeModal';
-import { postRecommend } from '@/lib/api/recipe';
 import { useState } from 'react';
+
+import { postRecommend } from '@/lib/api/recipe';
+import { RecipeProps } from '@/types/recipe';
 import { RecipeData } from '@/types/recipe';
+
 import Loading from '../Loading';
+import RecipeModal from '../RecipeModal';
 
 export default function Recipe({ foodName, recipeId, onDeleteSuccess }: RecipeProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);

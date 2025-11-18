@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import FindModal from '.';
 
 const meta: Meta<typeof FindModal> = {

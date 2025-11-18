@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
-import useDropdownStore from '@/stores/useDropdownStore';
+
 import { postLogout } from '@/lib/api/logout';
+import useDropdownStore from '@/stores/useDropdownStore';
 
 export default function Dropdown() {
   const router = useRouter();

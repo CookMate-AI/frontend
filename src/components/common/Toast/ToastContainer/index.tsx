@@ -1,4 +1,5 @@
 import { useToastStore } from '@/stores/useToastStore';
+
 import Toast from '..';
 
 export default function ToastContainer() {

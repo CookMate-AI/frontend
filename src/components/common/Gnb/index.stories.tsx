@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import Gnb from '.';
 
 const meta: Meta<typeof Gnb> = {

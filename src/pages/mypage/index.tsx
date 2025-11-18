@@ -1,7 +1,8 @@
-import EditProfile from '@/components/Mypage/EditProfile';
-import MyRecipes from '@/components/Mypage/MyRecipes';
 import Image from 'next/image';
 import { useState } from 'react';
+
+import EditProfile from '@/components/Mypage/EditProfile';
+import MyRecipes from '@/components/Mypage/MyRecipes';
 import useNicknameStore from '@/stores/useNicknameStore';
 
 export default function Mypage() {
