@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-import FindModal from '@/features/auth/login/components/FindModal';
+import FindModal from '@/features/auth/find/components/FindModal';
 import { postLogin } from '@/lib/api/login';
 import useAuthStore from '@/stores/auth/useAuthStore';
 import { useFindIdModalStore, useFindPasswordModalStore } from '@/stores/ui/useModalStore';
@@ -147,7 +147,9 @@ export default function Login() {
           </div>
         </form>
       </div>
+
       <FindModal type="id" isModalOpen={isIdOpen} onClose={closeIdModal} />
+
       <FindModal type="password" isModalOpen={isPwOpen} onClose={closePwModal} />
     </div>
   );
