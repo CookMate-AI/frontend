@@ -5,7 +5,7 @@ import { postRecommend } from '@/lib/api/recipe';
 import { RecipeProps } from '@/types/recipe';
 import { RecipeData } from '@/types/recipe';
 
-import Loading from '../Loading';
+import Loading from '../../feedback/Loading';
 import RecipeModal from '../RecipeModal';
 
 export default function Recipe({ foodName, recipeId, onDeleteSuccess }: RecipeProps) {

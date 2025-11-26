@@ -1,16 +1,16 @@
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useEffect,useState } from 'react';
+// import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import AlertModal from '@/components/common/AlertModal';
-import Button from '@/components/common/Button';
-import Input from '@/components/common/Input';
-import { deleteSecession,getCheckNickname, getInfo, postPw, putInfo } from '@/lib/api/edit';
-import { useDeleteAccountModal } from '@/stores/useModalStore';
-import useNicknameStore from '@/stores/useNicknameStore';
-import usePasswordStore from '@/stores/usePasswordStore';
-import { ChangeUserData,FormValues, UserInfoData } from '@/types/editProfile';
+import AlertModal from '@/components/ui/AlertModal';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import { getCheckNickname, getInfo, postPw, putInfo } from '@/lib/api/edit';
+import usePasswordStore from '@/stores/auth/usePasswordStore';
+import useNicknameStore from '@/stores/nickname/useNicknameStore';
+import { useDeleteAccountModal } from '@/stores/ui/useModalStore';
+import { ChangeUserData, FormValues, UserInfoData } from '@/types/editProfile';
 
 export default function EditProfile() {
   const {
@@ -35,7 +35,7 @@ export default function EditProfile() {
   const watchNewPassword = watch('newPassword');
   const watchPasswordConfirm = watch('passwordConfirm');
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const isFormValid = () => {
     if (nicknameChangeSuccess) {
@@ -196,16 +196,16 @@ export default function EditProfile() {
     }
   };
 
-  const deleteAccount = async () => {
-    try {
-      await deleteSecession();
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('userNickname');
-      router.push('/');
-    } catch (error) {
-      console.error('회원 탈퇴 중 에러 발생', error);
-    }
-  };
+  // const deleteAccount = async () => {
+  //   try {
+  //     await deleteSecession();
+  //     localStorage.removeItem('accessToken');
+  //     localStorage.removeItem('userNickname');
+  //     router.push('/');
+  //   } catch (error) {
+  //     console.error('회원 탈퇴 중 에러 발생', error);
+  //   }
+  // };
 
   return (
     <>
@@ -402,8 +402,8 @@ export default function EditProfile() {
         message={'정말 탈퇴하실 건가요?'}
         isOpen={isModalOpen}
         onClose={closeModal}
-        onClick={deleteAccount}
-        okCancle
+        // onClick={deleteAccount}
+        // okCancle
       />
     </>
   );
