@@ -16,10 +16,3 @@ export interface RecipeSaveData {
   recipe: string;
   category: number;
 }
-
-export interface RecipeInfoData {
-  recipeId: number;
-  foodName: string;
-  content: string;
-  category: number;
-}

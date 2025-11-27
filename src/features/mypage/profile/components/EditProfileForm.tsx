@@ -2,7 +2,8 @@ import { Control, Controller, FieldErrors } from 'react-hook-form';
 
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-import { FormValues, UserInfoData } from '@/types/editProfile';
+
+import { FormValues, UserInfoData } from '../types';
 
 interface EditProfileFormProps {
   control: Control<FormValues>;
@@ -39,7 +40,6 @@ export function EditProfileForm({
 }: EditProfileFormProps) {
   return (
     <form onSubmit={onSubmit} className="relative flex h-full flex-col gap-30 px-60 py-50">
-
       <Input type="text" label="아이디" value={infoData?.userId || ''} disabled />
       <Input type="text" label="이메일" value={infoData?.email || ''} disabled />
 

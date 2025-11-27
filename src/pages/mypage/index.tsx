@@ -1,4 +1,3 @@
-// src/pages/mypage.tsx
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -12,7 +11,6 @@ export default function Mypage() {
 
   return (
     <div className="flex gap-30 px-40 py-60 lg:gap-70 lg:px-80 lg:py-100">
-      {/* 사이드바 */}
       <div className="relative h-260 w-230 min-w-100 overflow-hidden rounded-10 border-2 border-gray-400 bg-white lg:h-430">
         <div className="flex h-160 w-full flex-col items-center justify-center gap-24 border-b-2 border-gray-400 lg:h-270">
           <div className="relative h-50 w-50 lg:h-85 lg:w-85">
@@ -40,7 +38,6 @@ export default function Mypage() {
         </div>
       </div>
 
-      {/* 오른쪽 메인 영역 */}
       <div className="h-780 w-1000 overflow-y-auto rounded-10 border-2 border-gray-400 bg-white scrollbar-hide lg:h-850">
         {activeTab === 'recipes' ? <MyRecipes /> : <EditProfile />}
       </div>

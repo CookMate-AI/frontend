@@ -6,7 +6,8 @@ import { deleteSecession, getCheckNickname, getInfo, postPw, putInfo } from '@/l
 import usePasswordStore from '@/stores/auth/usePasswordStore';
 import useNicknameStore from '@/stores/nickname/useNicknameStore';
 import { useDeleteAccountModal } from '@/stores/ui/useModalStore';
-import { ChangeUserData, FormValues, UserInfoData } from '@/types/editProfile';
+
+import { ChangeUserData, FormValues, UserInfoData } from '../types';
 
 export function useEditProfile() {
   const {
@@ -155,16 +156,13 @@ export function useEditProfile() {
           nickName: data.nickname,
           userPw: '',
         };
-      }
-      else if (!nicknameChangeSuccess && isPasswordEditOpen && isPasswordVerified) {
+      } else if (!nicknameChangeSuccess && isPasswordEditOpen && isPasswordVerified) {
         apiData = {
           num: 2,
           nickName: infoData?.nickName || '',
           userPw: data.newPassword,
         };
-      }
-
-      else if (nicknameChangeSuccess && isPasswordEditOpen && isPasswordVerified) {
+      } else if (nicknameChangeSuccess && isPasswordEditOpen && isPasswordVerified) {
         apiData = {
           num: 3,
           nickName: data.nickname,

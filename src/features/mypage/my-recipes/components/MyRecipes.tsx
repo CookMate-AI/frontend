@@ -4,7 +4,8 @@ import { useCallback, useEffect, useState } from 'react';
 import Recipe from '@/components/common/RecipeCard';
 import Button from '@/components/ui/Button';
 import { getInfo } from '@/lib/api/recipe';
-import { RecipeInfoData } from '@/types/recipe';
+
+import { RecipeInfoData } from '../types';
 
 export default function MyRecipes() {
   const [infoData, setInfoData] = useState<RecipeInfoData[]>([]);
