@@ -15,7 +15,7 @@ export default function MyRecipes() {
       const result = await getInfo(0);
       setInfoData(result);
     } catch (error) {
-      console.error('저장된 레시피 가져오기 중 에러 발생', error)
+      console.error('저장된 레시피 가져오기 중 에러 발생', error);
     }
   }, []);
 
@@ -33,7 +33,7 @@ export default function MyRecipes() {
         <div className="grid grid-cols-2 gap-x-20 gap-y-30 lg:grid-cols-3 lg:gap-x-70 lg:gap-y-50">
           {infoData.map((data, index) => (
             <Recipe
-              key={`${data}-${index}`}
+              key={`${data.recipeId}-${index}`}
               foodName={data.foodName}
               index={index}
               recipeId={data.recipeId}
