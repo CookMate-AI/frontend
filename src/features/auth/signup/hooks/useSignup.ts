@@ -1,4 +1,3 @@
-// features/auth/signup/hooks/useSignup.ts
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -27,7 +26,6 @@ export function useSignup() {
     },
   });
 
-  /** 아이디 중복확인 */
   const onCheckUserId = useCallback(async () => {
     const id = watch('id');
     if (!id) return alert('아이디를 입력해 주세요.');
@@ -36,7 +34,6 @@ export function useSignup() {
     alert(result.message);
   }, [watch]);
 
-  /** 인증코드 메일 발송 */
   const onCheckEmail = useCallback(async () => {
     const email = watch('email');
     if (!email) return alert('이메일을 입력해 주세요.');
@@ -45,7 +42,6 @@ export function useSignup() {
     alert(result.message);
   }, [watch]);
 
-  /** 인증코드 확인 */
   const onCheckEmailCertification = useCallback(async () => {
     const email = watch('email');
     const code = watch('emailConfirm');
@@ -56,7 +52,6 @@ export function useSignup() {
     alert(result.message);
   }, [watch]);
 
-  /** 최종 회원가입 */
   const onSubmit = useCallback(async (data: SignupFormValues) => {
     const signupData = {
       userId: data.id,

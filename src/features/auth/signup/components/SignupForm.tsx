@@ -1,5 +1,3 @@
-// features/auth/signup/components/SignupForm.tsx
-
 import type React from 'react';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 
@@ -35,7 +33,7 @@ export function SignupForm({
 }: SignupFormProps) {
   return (
     <form onSubmit={onSubmit} className="mt-70 flex flex-col gap-30">
-      {/* 아이디 */}
+
       <div className="relative flex items-end gap-20">
         <div className="w-full">
           <Controller
@@ -67,7 +65,6 @@ export function SignupForm({
         />
       </div>
 
-      {/* 이메일 */}
       <div className="relative flex items-end gap-20">
         <div className="w-full">
           <Controller
@@ -99,7 +96,6 @@ export function SignupForm({
         />
       </div>
 
-      {/* 인증번호 */}
       <div className="relative flex items-end gap-20">
         <div className="w-full">
           <Controller
@@ -131,7 +127,6 @@ export function SignupForm({
         />
       </div>
 
-      {/* 비밀번호 */}
       <div className="relative">
         <Controller
           name="password"
@@ -154,7 +149,6 @@ export function SignupForm({
         )}
       </div>
 
-      {/* 비밀번호 확인 */}
       <div className="relative">
         <Controller
           name="passwordConfirm"
@@ -177,7 +171,6 @@ export function SignupForm({
         )}
       </div>
 
-      {/* 약관 동의 */}
       <div className="flex items-center gap-10">
         <Controller
           name="agree"
@@ -203,7 +196,6 @@ export function SignupForm({
         </span>
       </div>
 
-      {/* 가입하기 */}
       <Button
         label="가입하기"
         type="submit"
