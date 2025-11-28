@@ -1,5 +1,3 @@
-// pages/signup.tsx
-
 import { SignupForm } from '@/features/auth/signup/components/SignupForm';
 import { useSignup } from '@/features/auth/signup/hooks/useSignup';
 

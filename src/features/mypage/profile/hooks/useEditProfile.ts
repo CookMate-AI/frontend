@@ -2,7 +2,13 @@ import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { deleteSecession, getCheckNickname, getInfo, postPw, putInfo } from '@/lib/api/edit';
+import {
+  deleteSecession,
+  getCheckNickname,
+  getInfo,
+  postPw,
+  putInfo,
+} from '@/features/mypage/profile/api/editApi';
 import usePasswordStore from '@/stores/auth/usePasswordStore';
 import useNicknameStore from '@/stores/nickname/useNicknameStore';
 import { useDeleteAccountModal } from '@/stores/ui/useModalStore';

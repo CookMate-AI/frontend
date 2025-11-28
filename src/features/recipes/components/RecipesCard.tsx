@@ -1,23 +1,33 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { postRecommend } from '@/lib/api/recipe';
-import { RecipeProps } from '@/types/recipe';
-import { RecipeData } from '@/types/recipe';
+import Loading from '@/components/feedback/Loading';
 
-import Loading from '../../feedback/Loading';
-import RecipeModal from '../RecipeModal';
+import { postRecommend } from '../api/recipesApi';
+import type { RecipeData } from '../types/recipeType';
+import { RecipeModal } from './RecipesModal';
 
-export default function Recipe({ foodName, recipeId, onDeleteSuccess }: RecipeProps) {
+export type RecipeCardMode = 'search' | 'mypage';
+
+interface RecipeCardProps {
+  ingredients?: string;
+  foodName: string;
+  mode: RecipeCardMode;
+  recipeId?: number;
+  onDeleteSuccess?: () => void;
+}
+
+export function RecipeCard({ ingredients, foodName, mode, recipeId, onDeleteSuccess }: RecipeCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState<RecipeData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
   const youtubeUrlForm = `https://www.youtube.com/results?search_query=${foodName}+레시피`;
 
   const handleClick = async () => {
     setIsLoading(true);
     try {
-      const result = await postRecommend(foodName);
+      const result = await postRecommend(ingredients ?? '', foodName);
       setData(result);
       setIsModalOpen(true);
     } catch (error) {
@@ -36,13 +46,15 @@ export default function Recipe({ foodName, recipeId, onDeleteSuccess }: RecipePr
     <>
       <div className="relative cursor-pointer active:animate-press" onClick={handleClick}>
         <div className="relative h-140 w-110 lg:h-175 lg:w-135">
-          <Image src={'/icons/ic-recipe.svg'} alt="recipe" fill className="object-contain" />
+          <Image src="/icons/ic-recipe.svg" alt="recipe" fill className="object-contain" />
         </div>
         <p className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 break-words text-center text-14 font-bold lg:text-20">
           {foodName}
         </p>
       </div>
+
       {isLoading && <Loading />}
+
       <RecipeModal
         recipeData={data}
         isOpen={isModalOpen}
@@ -50,6 +62,7 @@ export default function Recipe({ foodName, recipeId, onDeleteSuccess }: RecipePr
         foodName={foodName}
         setRecipeData={setData}
         closeModal={closeModal}
+        mode={mode}
         recipeId={recipeId}
         onDeleteSuccess={onDeleteSuccess}
       />

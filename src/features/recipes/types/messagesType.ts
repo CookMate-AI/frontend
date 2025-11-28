@@ -13,3 +13,5 @@ export interface ErrorMessage {
   type: 'error';
   content: string[];
 }
+
+export type ChatMessage = UserMessage | ErrorMessage | BotMessage;
