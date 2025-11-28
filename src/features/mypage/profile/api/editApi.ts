@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 
-import { api } from './axios';
+import { api } from '../../../../lib/api/axios';
 
 interface InfoData {
   num: number;
@@ -60,4 +60,4 @@ export const deleteSecession = async () => {
   } catch (error) {
     throw error;
   }
-}
+};

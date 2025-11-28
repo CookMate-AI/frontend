@@ -1,5 +1,3 @@
-// features/auth/signup/api/signupApi.ts
-
 import { AxiosError } from 'axios';
 
 import { api } from '@/lib/api/axios';

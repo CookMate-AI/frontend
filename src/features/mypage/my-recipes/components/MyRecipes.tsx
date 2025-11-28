@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 
-import Recipe from '@/components/common/Recipe';
 import Button from '@/components/ui/Button';
-import { getInfo } from '@/lib/api/recipe';
-import { RecipeInfoData } from '@/types/recipe';
+import { RecipeCard } from '@/features/recipes/components';
+
+import { getInfo } from '../../../recipes/api/recipesApi';
+import type { RecipeInfoData } from '../types';
 
 export default function MyRecipes() {
   const [infoData, setInfoData] = useState<RecipeInfoData[]>([]);
@@ -15,7 +16,7 @@ export default function MyRecipes() {
       const result = await getInfo(0);
       setInfoData(result);
     } catch (error) {
-      console.error('저장된 레시피 가져오기 중 에러 발생', error)
+      console.error('저장된 레시피 가져오기 중 에러 발생', error);
     }
   }, []);
 
@@ -31,11 +32,11 @@ export default function MyRecipes() {
     <div className="flex w-full flex-col items-center justify-center gap-20 py-30 lg:gap-30 lg:px-60 lg:py-50">
       {Array.isArray(infoData) && infoData.length > 0 ? (
         <div className="grid grid-cols-2 gap-x-20 gap-y-30 lg:grid-cols-3 lg:gap-x-70 lg:gap-y-50">
-          {infoData.map((data, index) => (
-            <Recipe
-              key={`${data}-${index}`}
+          {infoData.map((data) => (
+            <RecipeCard
+              key={data.recipeId}
               foodName={data.foodName}
-              index={index}
+              mode="mypage"
               recipeId={data.recipeId}
               onDeleteSuccess={getRecipeInfo}
             />

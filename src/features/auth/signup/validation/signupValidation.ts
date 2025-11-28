@@ -1,5 +1,3 @@
-// features/auth/signup/validation/signupValidation.ts
-
 export const idRules = {
   required: '아이디를 입력해 주세요.',
   validate: (value: string) => {

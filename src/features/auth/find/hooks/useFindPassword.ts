@@ -1,5 +1,3 @@
-// features/auth/find/hooks/useFindPassword.ts
-
 import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 

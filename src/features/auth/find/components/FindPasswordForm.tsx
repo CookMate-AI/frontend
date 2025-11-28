@@ -1,5 +1,3 @@
-// features/auth/find/components/FindPasswordForm.tsx
-
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 
 import Button from '@/components/ui/Button';
